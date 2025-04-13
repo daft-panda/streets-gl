@@ -32,6 +32,30 @@ uniform PerMaterial {
 	float time;
 };
 
+#if USE_IDENTIFIABLE_FEATURES == 1
+	flat in uint vOsmId;
+
+	// Add uniform buffer for highlighted IDs
+	uniform HighlightedFeatures {
+		// Array of IDs to highlight
+		uint osmIds[128]; // You can adjust the size based on your needs
+		// Highlight color
+		vec4 highlightColor;
+	};
+
+	bool isHighlighted(uint id) {
+		for (uint i = 0u; i < 128u; i++) {
+			if (id == 0u) {
+				break;
+			}
+			if (id == osmIds[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+#endif
+
 uniform sampler2DArray tMap;
 uniform sampler2DArray tNormal;
 uniform sampler2D tWaterNormal;
@@ -67,6 +91,20 @@ void main() {
 	if (edgeFactor() > 0.9) {
 		//discard;
 	}
+
+	#if USE_IDENTIFIABLE_FEATURES == 1
+		// Check if this osmId should be highlighted
+		if (isHighlighted(vOsmId)) {
+			// Use the configurable highlight color
+			outColor = highlightColor;
+			outGlow = vec3(0);
+			outNormal = packNormal(vec3(modelViewMatrix * vec4(vNormal, 0)));
+			outRoughnessMetalnessF0 = vec3(0.5, 0.0, 0.03);
+			outMotion = getMotionVector(vClipPos, vClipPosPrev);
+			outObjectId = 0u;
+			return;
+		}
+    #endif
 
 	if (vTextureId == 0) {
 		vec2 normalizedUV = fract((vUv + detailTextureOffset) / (TILE_SIZE * DETAIL_UV_SCALE));

@@ -5,7 +5,8 @@ import {
 	UniformFloat4,
 	UniformInt1,
 	UniformMatrix4,
-	UniformTexture2DArray
+	UniformTexture2DArray,
+	UniformUint1
 } from "~/lib/renderer/abstract-renderer/Uniform";
 import Tile from "../../objects/Tile";
 import Mat4 from "~/lib/math/Mat4";
@@ -363,6 +364,18 @@ export default class GBufferPass extends Pass<{
 			this.projectedMeshMaterial.getUniform<UniformFloat1>('time', 'PerMaterial').value[0] = performance.now() * 0.001;
 
 			this.projectedMeshMaterial.updateUniformBlock('PerMesh');
+
+			if (Config.IdentifiableFeatures) {
+				const ids = new Uint32Array(128);
+				ids[0] = 760727194;
+				this.projectedMeshMaterial.getUniform<UniformUint1>('osmIds[0]', 'HighlightedFeatures').value = ids;
+				const color = new Float32Array(4);
+				color[0] = 1.0;
+				color[3] = 1.0;
+				this.projectedMeshMaterial.getUniform<UniformFloat4>('highlightColor', 'HighlightedFeatures').value = color;
+
+				this.projectedMeshMaterial.updateUniformBlock('HighlightedFeatures');
+			}
 
 			tile.projectedMesh.draw();
 		}

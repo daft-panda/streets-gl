@@ -26,6 +26,7 @@ import {ExtrudedTextures, ProjectedTextures} from "~/lib/tile-processing/tile3d/
 import VectorNode from "~/lib/tile-processing/vector/features/VectorNode";
 import * as Simplify from "simplify-js";
 import {SurfaceBuilderOrientation} from "~/lib/tile-processing/tile3d/builders/SurfaceBuilder";
+import Tile3DProjectedIdentifiableGeometryBuilder from "../builders/Tile3DProjectedIdentifiableGeometryBuilder";
 
 const TileSize = 611.4962158203125;
 
@@ -510,7 +511,7 @@ export default class VectorAreaHandler implements Handler {
 			addUsageMask?: boolean;
 		}
 	): Tile3DFeature[] {
-		const builder = new Tile3DProjectedGeometryBuilder(this.getMultipolygon());
+		const builder = Config.IdentifiableFeatures ? new Tile3DProjectedIdentifiableGeometryBuilder(this.getMultipolygon()) : new Tile3DProjectedGeometryBuilder(this.getMultipolygon());
 		builder.setZIndex(zIndex);
 
 		builder.addPolygon({
@@ -520,7 +521,8 @@ export default class VectorAreaHandler implements Handler {
 			orientation: orientation,
 			stretch: stretch,
 			uvScale: uvScale,
-			addUsageMask: addUsageMask
+			addUsageMask: addUsageMask,
+			osmId: this.osmReference ? this.osmReference.id : 0
 		});
 
 		const features: Tile3DFeature[] = [builder.getGeometry()];

@@ -4,117 +4,135 @@ import {RendererTypes} from "~/lib/renderer/RendererTypes";
 import ResourceLoader from "../../world/ResourceLoader";
 import AbstractRenderer from "~/lib/renderer/abstract-renderer/AbstractRenderer";
 import Config from "../../Config";
+import { Uniform } from "~/lib/renderer/abstract-renderer/Uniform";
 
 export default class ProjectedMeshMaterialContainer extends MaterialContainer {
 	public constructor(renderer: AbstractRenderer, isExtruded: boolean) {
 		super(renderer);
 
+		const uniforms: Uniform[]= [
+			{
+				name: 'modelViewMatrix',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Matrix4,
+				value: new Float32Array(16)
+			}, {
+				name: 'modelViewMatrixPrev',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Matrix4,
+				value: new Float32Array(16)
+			}, {
+				name: 'projectionMatrix',
+				block: 'PerMaterial',
+				type: RendererTypes.UniformType.Matrix4,
+				value: new Float32Array(16)
+			}, {
+				name: 'time',
+				block: 'PerMaterial',
+				type: RendererTypes.UniformType.Float1,
+				value: new Float32Array(1)
+			}, {
+				name: 'tMap',
+				block: null,
+				type: RendererTypes.UniformType.Texture2DArray,
+				value: null
+			}, {
+				name: 'tWaterNormal',
+				block: null,
+				type: RendererTypes.UniformType.Texture2D,
+				value: this.renderer.createTexture2D({
+					anisotropy: 16,
+					data: ResourceLoader.get('waterNormal'),
+					minFilter: RendererTypes.MinFilter.LinearMipmapLinear,
+					magFilter: RendererTypes.MagFilter.Linear,
+					wrap: RendererTypes.TextureWrap.Repeat,
+					format: RendererTypes.TextureFormat.RGBA8Unorm,
+					mipmaps: true
+				})
+			}, {
+				name: 'tWaterNoise',
+				block: null,
+				type: RendererTypes.UniformType.Texture2D,
+				value: this.renderer.createTexture2D({
+					anisotropy: 16,
+					data: ResourceLoader.get('noise'),
+					minFilter: RendererTypes.MinFilter.LinearMipmapLinear,
+					magFilter: RendererTypes.MagFilter.Linear,
+					wrap: RendererTypes.TextureWrap.Repeat,
+					format: RendererTypes.TextureFormat.RGBA8Unorm,
+					mipmaps: true
+				})
+			}, {
+				name: 'tRingHeight',
+				block: null,
+				type: RendererTypes.UniformType.Texture2DArray,
+				value: null
+			}, {
+				name: 'tNormal',
+				block: null,
+				type: RendererTypes.UniformType.Texture2DArray,
+				value: null
+			}, {
+				name: 'transformNormal0',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float4,
+				value: new Float32Array(4)
+			}, {
+				name: 'transformNormal1',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float4,
+				value: new Float32Array(4)
+			}, {
+				name: 'terrainRingSize',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float1,
+				value: new Float32Array(1)
+			}, {
+				name: 'terrainRingOffset',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float4,
+				value: new Float32Array(4)
+			}, {
+				name: 'terrainLevelId',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Int1,
+				value: new Int32Array(1)
+			}, {
+				name: 'segmentCount',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float1,
+				value: new Float32Array(1)
+			}, {
+				name: 'cameraPosition',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float2,
+				value: new Float32Array(2)
+			}, {
+				name: 'detailTextureOffset',
+				block: 'PerMesh',
+				type: RendererTypes.UniformType.Float2,
+				value: new Float32Array(2)
+			}
+		];
+
+		if (Config.IdentifiableFeatures) {
+			uniforms.push({
+				name: 'osmIds[0]',
+				block: 'HighlightedFeatures',
+				type: RendererTypes.UniformType.Uint1,
+				value: new Uint32Array(1)
+			});
+			uniforms.push({
+				name: 'highlightColor',
+				block: 'HighlightedFeatures',
+				type: RendererTypes.UniformType.Float4,
+				value: new Float32Array(4)
+			});
+		}
+
 		this.material = this.renderer.createMaterial({
 			name: 'Projected mesh material',
-			uniforms: [
-				{
-					name: 'modelViewMatrix',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Matrix4,
-					value: new Float32Array(16)
-				}, {
-					name: 'modelViewMatrixPrev',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Matrix4,
-					value: new Float32Array(16)
-				}, {
-					name: 'projectionMatrix',
-					block: 'PerMaterial',
-					type: RendererTypes.UniformType.Matrix4,
-					value: new Float32Array(16)
-				}, {
-					name: 'time',
-					block: 'PerMaterial',
-					type: RendererTypes.UniformType.Float1,
-					value: new Float32Array(1)
-				}, {
-					name: 'tMap',
-					block: null,
-					type: RendererTypes.UniformType.Texture2DArray,
-					value: null
-				}, {
-					name: 'tWaterNormal',
-					block: null,
-					type: RendererTypes.UniformType.Texture2D,
-					value: this.renderer.createTexture2D({
-						anisotropy: 16,
-						data: ResourceLoader.get('waterNormal'),
-						minFilter: RendererTypes.MinFilter.LinearMipmapLinear,
-						magFilter: RendererTypes.MagFilter.Linear,
-						wrap: RendererTypes.TextureWrap.Repeat,
-						format: RendererTypes.TextureFormat.RGBA8Unorm,
-						mipmaps: true
-					})
-				}, {
-					name: 'tWaterNoise',
-					block: null,
-					type: RendererTypes.UniformType.Texture2D,
-					value: this.renderer.createTexture2D({
-						anisotropy: 16,
-						data: ResourceLoader.get('noise'),
-						minFilter: RendererTypes.MinFilter.LinearMipmapLinear,
-						magFilter: RendererTypes.MagFilter.Linear,
-						wrap: RendererTypes.TextureWrap.Repeat,
-						format: RendererTypes.TextureFormat.RGBA8Unorm,
-						mipmaps: true
-					})
-				}, {
-					name: 'tRingHeight',
-					block: null,
-					type: RendererTypes.UniformType.Texture2DArray,
-					value: null
-				}, {
-					name: 'tNormal',
-					block: null,
-					type: RendererTypes.UniformType.Texture2DArray,
-					value: null
-				}, {
-					name: 'transformNormal0',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float4,
-					value: new Float32Array(4)
-				}, {
-					name: 'transformNormal1',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float4,
-					value: new Float32Array(4)
-				}, {
-					name: 'terrainRingSize',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float1,
-					value: new Float32Array(1)
-				}, {
-					name: 'terrainRingOffset',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float4,
-					value: new Float32Array(4)
-				}, {
-					name: 'terrainLevelId',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Int1,
-					value: new Int32Array(1)
-				}, {
-					name: 'segmentCount',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float1,
-					value: new Float32Array(1)
-				}, {
-					name: 'cameraPosition',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float2,
-					value: new Float32Array(2)
-				}, {
-					name: 'detailTextureOffset',
-					block: 'PerMesh',
-					type: RendererTypes.UniformType.Float2,
-					value: new Float32Array(2)
-				}
-			],
+			uniforms,
 			defines: {
 				NORMAL_MIX_FROM: Config.TerrainNormalMixRange[0].toFixed(1),
 				NORMAL_MIX_TO: Config.TerrainNormalMixRange[1].toFixed(1),
@@ -122,6 +140,7 @@ export default class ProjectedMeshMaterialContainer extends MaterialContainer {
 				USE_HEIGHT: '1',
 				TILE_SIZE: Config.TileSize.toFixed(10),
 				DETAIL_UV_SCALE: Config.TerrainDetailUVScale.toFixed(10),
+				USE_IDENTIFIABLE_FEATURES: Config.IdentifiableFeatures ? '1' : '0',
 			},
 			primitive: {
 				frontFace: RendererTypes.FrontFace.CCW,

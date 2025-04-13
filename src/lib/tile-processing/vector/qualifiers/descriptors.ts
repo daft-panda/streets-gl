@@ -13,6 +13,7 @@ export interface VectorNodeDescriptor {
 }
 
 export interface VectorPolylineDescriptor {
+	osmId: number;
 	type: 'path' | 'fence' | 'wall' | 'powerLine' | 'waterway';
 	pathType?: 'roadway' | 'footway' | 'cycleway' | 'railway' | 'tramway' | 'runway';
 	wallType?: 'stone' | 'concrete' | 'hedge';

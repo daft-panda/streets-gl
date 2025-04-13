@@ -5,6 +5,11 @@ in vec2 uv;
 in vec3 normal;
 in uint textureId;
 
+#if USE_IDENTIFIABLE_FEATURES == 1
+	in uint osmId;
+	flat out uint vOsmId;
+#endif
+
 out vec2 vUv;
 out vec3 vPosition;
 out vec3 vLocalPosition;
@@ -35,6 +40,16 @@ uniform PerMaterial {
 	float time;
 };
 
+#if USE_IDENTIFIABLE_FEATURES == 1
+	// Add uniform buffer for highlighted IDs
+	uniform HighlightedFeatures {
+		// Array of IDs to highlight
+		uint osmIds[128]; // You can adjust the size based on your needs
+		// Highlight color
+		vec4 highlightColor;
+	};
+#endif
+
 uniform sampler2DArray tRingHeight;
 
 float sampleHeight(vec2 uv, int level) {
@@ -54,6 +69,10 @@ void main() {
 	vCenter = vec3(0);
 	int centerIndex = gl_VertexID - 3 * int(float(gl_VertexID) / 3.);
 	vCenter[centerIndex] = 1.;
+
+	#if USE_IDENTIFIABLE_FEATURES == 1
+    	vOsmId = osmId;
+    #endif
 
 	vTextureId = int(textureId);
 

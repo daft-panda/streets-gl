@@ -27,6 +27,10 @@ export interface Tile3DBuffersProjected {
 	boundingBox: BoundingBox;
 }
 
+export interface Tile3DBuffersIdentifiableProjected extends Tile3DBuffersProjected {
+  osmIdBuffer: Uint32Array;
+}
+
 export interface Tile3DBuffersHugging {
 	positionBuffer: Float32Array;
 	normalBuffer: Float32Array;

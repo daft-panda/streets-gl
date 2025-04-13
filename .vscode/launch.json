@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch localhost",
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost:8080/index.html",
+            "webRoot": "${workspaceFolder}",
+            "pathMappings": [
+                {
+                    "url": "webpack://streets-gl/src/app",
+                    "path": "${workspaceFolder}/src/app"
+                },
+                {
+                    "url": "webpack://streets-gl/src/lib",
+                    "path": "${workspaceFolder}/src/lib"
+                }
+            ]
+        }
+    ]
+}

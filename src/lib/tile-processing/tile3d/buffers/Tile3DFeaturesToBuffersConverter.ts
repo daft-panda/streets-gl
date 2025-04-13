@@ -2,6 +2,7 @@ import Tile3DBuffers, {
 	BoundingBox,
 	Tile3DBuffersExtruded,
 	Tile3DBuffersHugging,
+	Tile3DBuffersIdentifiableProjected,
 	Tile3DBuffersInstance,
 	Tile3DBuffersLabels,
 	Tile3DBuffersProjected, Tile3DTerrainMask
@@ -10,7 +11,7 @@ import Tile3DFeatureCollection from "~/lib/tile-processing/tile3d/features/Tile3
 import Utils from "~/app/Utils";
 import AABB3D from "~/lib/math/AABB3D";
 import Tile3DExtrudedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DExtrudedGeometry";
-import Tile3DProjectedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
+import Tile3DProjectedGeometry, { Tile3DIdentifiableProjectedGeometry } from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
 import Tile3DHuggingGeometry from "~/lib/tile-processing/tile3d/features/Tile3DHuggingGeometry";
 import Tile3DLabel from "~/lib/tile-processing/tile3d/features/Tile3DLabel";
 import Vec3 from "~/lib/math/Vec3";
@@ -21,6 +22,7 @@ import Tile3DInstance, {
 	Tile3DInstanceType
 } from "~/lib/tile-processing/tile3d/features/Tile3DInstance";
 import Tile3DTerrainMaskGeometry from "~/lib/tile-processing/tile3d/features/Tile3DTerrainMaskGeometry";
+import Config from "~/app/Config";
 
 const getRandom = <T>(arr: T[], n: number): T[] => {
 	let result = new Array<T>(n),
@@ -161,8 +163,10 @@ export class Tile3DFeaturesToBuffersConverter {
 		};
 	}
 
-	private static getProjectedBuffers(features: Tile3DProjectedGeometry[]): Tile3DBuffersProjected {
-		const sortedFeatures = this.sortProjectedFeatures(features);
+	private static getProjectedBuffers(f: Tile3DProjectedGeometry[]): Tile3DBuffersProjected {
+		const sortedFeatures  = f as Tile3DIdentifiableProjectedGeometry[];
+		// THIS SORT REMOVES THE OSM ID BUFFER IN WAYS I CANNOT EXPLAIN
+		// const sortedFeatures = this.sortProjectedFeatures(features);
 
 		const boundingBox = this.joinBoundingBoxes(sortedFeatures);
 		boundingBox.min.y = -1000;
@@ -185,13 +189,30 @@ export class Tile3DFeaturesToBuffersConverter {
 		const normalBufferMerged = Utils.mergeTypedArrays(Float32Array, normalBuffers);
 		const textureIdBufferMerged = Utils.mergeTypedArrays(Uint8Array, textureIdBuffers);
 
-		return {
+		let buffers = {
 			positionBuffer: positionBufferMerged,
 			normalBuffer: normalBufferMerged,
 			uvBuffer: uvBufferMerged,
 			textureIdBuffer: textureIdBufferMerged,
 			boundingBox: this.boundingBoxToFlatObject(boundingBox)
 		};
+
+		if (Config.IdentifiableFeatures) {
+			const osmIdBuffers: Uint32Array[] = [];
+			for (const feature of sortedFeatures) {
+				const idFeature = feature as Tile3DIdentifiableProjectedGeometry;
+				osmIdBuffers.push(idFeature.osmIdBuffer);
+			}
+			
+			const buffersWithIds: Tile3DBuffersIdentifiableProjected = {
+				osmIdBuffer: Utils.mergeTypedArrays(Uint32Array, osmIdBuffers),
+				...buffers
+			};
+			
+			return buffersWithIds;
+		}
+
+		return buffers;
 	}
 
 	private static getHuggingBuffers(features: Tile3DHuggingGeometry[]): Tile3DBuffersHugging {
@@ -357,7 +378,7 @@ export class Tile3DFeaturesToBuffersConverter {
 		return joined;
 	}
 
-	private static sortProjectedFeatures(features: Tile3DProjectedGeometry[]): Tile3DProjectedGeometry[] {
+	private static sortProjectedFeatures(features: Tile3DIdentifiableProjectedGeometry[]): Tile3DIdentifiableProjectedGeometry[] {
 		return features.sort((a, b) => {
 			return a.zIndex - b.zIndex;
 		});

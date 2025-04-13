@@ -7,6 +7,7 @@ export interface TileRequestParams {
 	tileServerEndpoint: string;
 	vectorTilesEndpointTemplate: string;
 	isTerrainHeightEnabled: boolean;
+	identifiableFeatures: boolean;
 }
 
 export default class MapWorker {

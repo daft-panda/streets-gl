@@ -46,6 +46,7 @@ const Config = {
 	SlippyMapMaxZoom: 16,
 	SlippyMapZoomFactor: 0.001,
 	SlippyMapFetchBatchSize: 4,
+	IdentifiableFeatures: true,
 	SettingsSchema: {
 		fov: {
 			label: 'Vertical field of view',

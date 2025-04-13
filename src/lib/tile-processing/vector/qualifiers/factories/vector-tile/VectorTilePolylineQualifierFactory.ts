@@ -17,7 +17,7 @@ import getFeatureHeightAndMinHeight
 	from "~/lib/tile-processing/vector/qualifiers/factories/vector-tile/helpers/getHeightAndMinHeight";
 
 export default class VectorTilePolylineQualifierFactory extends AbstractQualifierFactory<VectorPolylineDescriptor, VectorTile.FeatureTags> {
-	public fromTags(tags: VectorTile.FeatureTags): Qualifier<VectorPolylineDescriptor>[] {
+	public fromTags(osmId: number, tags: VectorTile.FeatureTags): Qualifier<VectorPolylineDescriptor>[] {
 		if (tags.type === 'path') {
 			switch (tags.pathType) {
 				case 'runway':
@@ -27,6 +27,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 					return [{
 						type: QualifierType.Descriptor,
 						data: {
+							osmId: osmId,
 							type: 'path',
 							pathType: 'runway',
 							width: width
@@ -51,6 +52,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 					qualifiers.push({
 						type: QualifierType.Descriptor,
 						data: {
+							osmId: osmId,
 							type: 'path',
 							pathType: 'roadway',
 							pathMaterial: params.material,
@@ -70,6 +72,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 						qualifiers.push({
 							type: QualifierType.Descriptor,
 							data: {
+								osmId: osmId,
 								type: 'path',
 								pathType: 'cycleway',
 								width: roadwayWidth + cyclewayWidth * 2,
@@ -83,6 +86,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 							qualifiers.push({
 								type: QualifierType.Descriptor,
 								data: {
+									osmId: osmId,
 									type: 'path',
 									pathType: 'footway',
 									width: roadwayWidth + sidewalkWidth * 2 + (cyclewaySide === 'both' ? cyclewayWidth * 2 : 0),
@@ -97,6 +101,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 								qualifiers.push({
 									type: QualifierType.Descriptor,
 									data: {
+										osmId: osmId,
 										type: 'path',
 										pathType: 'footway',
 										width: width,
@@ -112,6 +117,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 								qualifiers.push({
 									type: QualifierType.Descriptor,
 									data: {
+										osmId: osmId,
 										type: 'path',
 										pathType: 'footway',
 										width: width,
@@ -128,6 +134,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 					return [{
 						type: QualifierType.Descriptor,
 						data: {
+							osmId: osmId,
 							type: 'path',
 							pathType: 'footway',
 							width: <number>tags.width ?? params.defaultWidth ?? 2
@@ -138,6 +145,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 					return [{
 						type: QualifierType.Descriptor,
 						data: {
+							osmId: osmId,
 							type: 'path',
 							pathType: 'cycleway',
 							width: <number>tags.width ?? params.defaultWidth ?? 3
@@ -153,6 +161,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 			return [{
 				type: QualifierType.Descriptor,
 				data: {
+					osmId: osmId,
 					type: 'path',
 					pathType: type,
 					width: width
@@ -189,6 +198,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 			return [{
 				type: QualifierType.Descriptor,
 				data: {
+					osmId: osmId,
 					type: 'waterway',
 					width: params.width,
 				}
@@ -201,6 +211,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 			return [{
 				type: QualifierType.Descriptor,
 				data: {
+					osmId: osmId,
 					type: 'wall',
 					wallType: params.material,
 					height: params.height,
@@ -215,6 +226,7 @@ export default class VectorTilePolylineQualifierFactory extends AbstractQualifie
 			return [{
 				type: QualifierType.Descriptor,
 				data: {
+					osmId: osmId,
 					type: 'fence',
 					fenceMaterial: params.material,
 					height: params.height,

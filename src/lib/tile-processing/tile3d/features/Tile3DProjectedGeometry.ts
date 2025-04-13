@@ -44,3 +44,7 @@ export default interface Tile3DProjectedGeometry extends Tile3DFeature {
 	uvBuffer: Float32Array;
 	textureIdBuffer: Uint8Array;
 }
+
+export interface Tile3DIdentifiableProjectedGeometry extends Tile3DProjectedGeometry {
+	osmIdBuffer: Uint32Array;
+}

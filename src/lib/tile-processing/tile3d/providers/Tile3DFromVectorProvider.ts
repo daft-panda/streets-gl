@@ -6,7 +6,7 @@ import VectorPolylineHandler from "~/lib/tile-processing/tile3d/handlers/VectorP
 import VectorAreaHandler from "~/lib/tile-processing/tile3d/handlers/VectorAreaHandler";
 import VectorFeatureCollection from "~/lib/tile-processing/vector/features/VectorFeatureCollection";
 import Tile3DInstance from "~/lib/tile-processing/tile3d/features/Tile3DInstance";
-import Tile3DProjectedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
+import Tile3DProjectedGeometry, { Tile3DIdentifiableProjectedGeometry } from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
 import Tile3DExtrudedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DExtrudedGeometry";
 import {applyMercatorFactorToExtrudedFeatures} from "~/lib/tile-processing/tile3d/utils";
 import Tile3DHuggingGeometry from "~/lib/tile-processing/tile3d/features/Tile3DHuggingGeometry";
@@ -25,6 +25,7 @@ import VectorNode from "~/lib/tile-processing/vector/features/VectorNode";
 import {OMBBResult} from "~/lib/tile-processing/tile3d/builders/Tile3DMultipolygon";
 import Vec2 from "~/lib/math/Vec2";
 import Vec3 from "~/lib/math/Vec3";
+import Config from "~/app/Config";
 
 export interface Tile3DProviderParams {
 	overpassEndpoint: string;
@@ -307,6 +308,8 @@ export default class Tile3DFromVectorProvider implements FeatureProvider<Tile3DF
 							collection.instances.push(feature as Tile3DInstance);
 							break;
 						case 'projected':
+							Config.IdentifiableFeatures ? 
+							collection.projected.push(feature as Tile3DIdentifiableProjectedGeometry) :
 							collection.projected.push(feature as Tile3DProjectedGeometry);
 							break;
 						case 'extruded':

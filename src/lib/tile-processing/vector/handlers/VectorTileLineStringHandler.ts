@@ -26,7 +26,7 @@ export default class VectorTileLineStringHandler implements VectorTileHandler {
 
 	public getFeatures(): VectorFeature[] {
 		const features: VectorFeature[] = [];
-		const qualifiers = new VectorTilePolylineQualifierFactory().fromTags(this.tags);
+		const qualifiers = new VectorTilePolylineQualifierFactory().fromTags(this.osmReference.id, this.tags);
 
 		if (!qualifiers) {
 			return features;
