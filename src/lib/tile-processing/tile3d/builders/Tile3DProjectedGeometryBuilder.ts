@@ -256,7 +256,7 @@ export default class Tile3DProjectedGeometryBuilder {
 
 		this.arrays.vertexMapping.push({
 			id: osmId,
-			startVertexIdx: this.arrays.normal.length == 0 ? 0 : this.arrays.normal.length - 1,
+			startVertexIdx: this.arrays.normal.length == 0 ? 0 : this.arrays.normal.length,
 			vertexCount
 		})
 
