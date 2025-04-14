@@ -41,13 +41,17 @@ uniform PerMaterial {
 };
 
 #if USE_IDENTIFIABLE_FEATURES == 1
-	// Add uniform buffer for highlighted IDs
-	uniform HighlightedFeatures {
-		// Array of IDs to highlight
-		uint osmIds[128]; // You can adjust the size based on your needs
-		// Highlight color
-		vec4 highlightColor;
-	};
+uniform FeatureIdVertexMapping {
+  uint vertexMappingCount;
+  // Each pair is (startVertexIdx, vertexCount)
+  uvec2 vertexMapping[128]; 
+};
+
+uniform HighlightedFeatures {
+  vec4 highlightColor;
+};
+
+flat out uint vIsHighlighted;
 #endif
 
 uniform sampler2DArray tRingHeight;
@@ -71,7 +75,24 @@ void main() {
 	vCenter[centerIndex] = 1.;
 
 	#if USE_IDENTIFIABLE_FEATURES == 1
-    	vOsmId = osmId;
+    	// Default to not highlighted
+		vIsHighlighted = 0u;
+		
+		// Check if this vertex is part of a highlighted way
+		uint vertexId = uint(gl_VertexID);
+		
+		// Loop through way mappings to find which way this vertex belongs to
+		for (uint i = 0u; i < vertexMappingCount; i++) {
+			uvec2 mapping = vertexMapping[i];
+			uint startIdx = mapping.x;
+			uint count = mapping.y;
+			
+			// Check if vertex is within this way's range
+			if (vertexId >= startIdx && vertexId < (startIdx + count)) {
+				vIsHighlighted = 1u;
+				break;
+			}
+		}
     #endif
 
 	vTextureId = int(textureId);

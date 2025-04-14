@@ -10,6 +10,7 @@ import {projectGeometryOnTerrain, projectLineOnTerrain} from "~/lib/tile-process
 import FenceBuilder from "~/lib/tile-processing/tile3d/builders/FenceBuilder";
 import Tile3DTerrainMaskGeometry from "~/lib/tile-processing/tile3d/features/Tile3DTerrainMaskGeometry";
 import {appendArrayInPlace} from "~/lib/tile-processing/utils";
+import { FeatureIdVertexMapping } from "../buffers/Tile3DBuffers";
 
 export default class Tile3DProjectedGeometryBuilder {
 	private readonly arrays: {
@@ -17,11 +18,13 @@ export default class Tile3DProjectedGeometryBuilder {
 		uv: number[];
 		normal: number[];
 		textureId: number[];
+		vertexMapping: FeatureIdVertexMapping[];
 	} = {
 		position: [],
 		uv: [],
 		normal: [],
-		textureId: []
+		textureId: [],
+		vertexMapping: []
 	};
 	private readonly terrainMaskPositions: number[] = [];
 	private readonly boundingBox: AABB3D = new AABB3D();
@@ -51,6 +54,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			isOriented = false,
 			stretch = false,
 			orientation = SurfaceBuilderOrientation.Along,
+			osmId,
 			addUsageMask
 		}: {
 			height: number;
@@ -59,6 +63,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			isOriented?: boolean;
 			stretch?: boolean;
 			orientation?: SurfaceBuilderOrientation;
+			osmId: number;
 			addUsageMask?: boolean;
 		}
 	): void {
@@ -74,6 +79,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			position: surface.position,
 			uv: surface.uv,
 			textureId: textureId,
+			osmId: osmId,
 			height: height
 		});
 
@@ -94,6 +100,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			uvMinX = 0,
 			uvMaxX = 1,
 			height = 0,
+			osmId,
 			textureId
 		}: {
 			vertexAdjacentToStart?: Vec2;
@@ -106,6 +113,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			uvMinX?: number;
 			uvMaxX?: number;
 			height?: number;
+			osmId: number;
 			textureId: number;
 		}
 	): void {
@@ -126,6 +134,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			position: road.position,
 			uv: road.uv,
 			textureId,
+			osmId,
 			height
 		});
 
@@ -172,12 +181,14 @@ export default class Tile3DProjectedGeometryBuilder {
 			width,
 			height,
 			textureId,
+			osmId,
 			textureScaleX,
 			textureScaleY
 		}: {
 			width: number;
 			height: number;
 			textureId: number;
+			osmId: number;
 			textureScaleX: number;
 			textureScaleY: number;
 		}
@@ -195,6 +206,7 @@ export default class Tile3DProjectedGeometryBuilder {
 			position: road.position,
 			uv: road.uv,
 			textureId: textureId,
+			osmId: osmId,
 			height: height
 		});
 
@@ -224,11 +236,13 @@ export default class Tile3DProjectedGeometryBuilder {
 			position,
 			uv,
 			textureId,
+			osmId,
 			height = 0
 		}: {
 			position: number[];
 			uv: number[];
 			textureId: number;
+			osmId: number;
 			height?: number;
 		}
 	): void {
@@ -239,6 +253,12 @@ export default class Tile3DProjectedGeometryBuilder {
 		this.addVerticesToBoundingBox(projected.position);
 
 		const vertexCount = projected.position.length / 3;
+
+		this.arrays.vertexMapping.push({
+			id: osmId,
+			startVertexIdx: this.arrays.normal.length == 0 ? 0 : this.arrays.normal.length - 1,
+			vertexCount
+		})
 
 		for (let i = 0; i < vertexCount; i++) {
 			this.arrays.normal.push(0, 1, 0);
@@ -294,8 +314,12 @@ export default class Tile3DProjectedGeometryBuilder {
 			positionBuffer: new Float32Array(this.arrays.position),
 			normalBuffer: new Float32Array(this.arrays.normal),
 			uvBuffer: new Float32Array(this.arrays.uv),
-			textureIdBuffer: new Uint8Array(this.arrays.textureId)
+			textureIdBuffer: new Uint8Array(this.arrays.textureId),
 		};
+	}
+
+	public getVertexIdMapping(): FeatureIdVertexMapping[] {
+		return this.arrays.vertexMapping;
 	}
 
 	public getTerrainMaskGeometry(): Tile3DTerrainMaskGeometry {

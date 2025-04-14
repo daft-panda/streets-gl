@@ -55,11 +55,26 @@ export interface Tile3DBuffersInstance {
 	interleavedBufferLOD1: Float32Array;
 }
 
-export default interface Tile3DBuffers {
+export interface Tile3DBuffers {
 	extruded: Tile3DBuffersExtruded;
 	projected: Tile3DBuffersProjected;
 	hugging: Tile3DBuffersHugging;
 	terrainMask: Tile3DTerrainMask;
 	labels: Tile3DBuffersLabels;
 	instances: Record<string, Tile3DBuffersInstance>;
+}
+
+export interface FeatureIdVertexMapping {
+	id: number;
+	startVertexIdx: number;
+	vertexCount: number;
+}
+
+export interface TileMetadata {
+	mapping: FeatureIdVertexMapping[];
+}
+
+export default interface TileData {
+	buffers: Tile3DBuffers;
+	metadata: TileMetadata;
 }

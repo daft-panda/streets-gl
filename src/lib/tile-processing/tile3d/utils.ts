@@ -1,6 +1,6 @@
 import MathUtils from "~/lib/math/MathUtils";
 import Tile3DExtrudedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DExtrudedGeometry";
-import Tile3DBuffers from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
+import TileData, {Tile3DBuffers} from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
 import {VectorNodeDescriptor} from "~/lib/tile-processing/vector/qualifiers/descriptors";
 
 export function applyMercatorFactorToExtrudedFeatures(extruded: Tile3DExtrudedGeometry[], x: number, y: number, zoom: number): void {
@@ -36,30 +36,30 @@ export function getRoadUV(lanesForward: number, lanesBackward: number): {minX: n
 	};
 }
 
-export function getTile3DBuffersTransferables(buffers: Tile3DBuffers): Transferable[] {
+export function getTile3DBuffersTransferables(tileData: TileData): Transferable[] {
 	const transferables: Transferable[] = [
-		buffers.extruded.positionBuffer.buffer,
-		buffers.extruded.uvBuffer.buffer,
-		buffers.extruded.normalBuffer.buffer,
-		buffers.extruded.textureIdBuffer.buffer,
-		buffers.extruded.colorBuffer.buffer,
-		buffers.extruded.idBuffer.buffer,
-		buffers.extruded.offsetBuffer.buffer,
-		buffers.extruded.localIdBuffer.buffer,
-		buffers.projected.positionBuffer.buffer,
-		buffers.projected.normalBuffer.buffer,
-		buffers.projected.uvBuffer.buffer,
-		buffers.projected.textureIdBuffer.buffer,
-		buffers.hugging.positionBuffer.buffer,
-		buffers.hugging.normalBuffer.buffer,
-		buffers.hugging.uvBuffer.buffer,
-		buffers.hugging.textureIdBuffer.buffer,
-		buffers.terrainMask.positionBuffer.buffer,
-		buffers.labels.position.buffer,
-		buffers.labels.priority.buffer
+		tileData.buffers.extruded.positionBuffer.buffer,
+		tileData.buffers.extruded.uvBuffer.buffer,
+		tileData.buffers.extruded.normalBuffer.buffer,
+		tileData.buffers.extruded.textureIdBuffer.buffer,
+		tileData.buffers.extruded.colorBuffer.buffer,
+		tileData.buffers.extruded.idBuffer.buffer,
+		tileData.buffers.extruded.offsetBuffer.buffer,
+		tileData.buffers.extruded.localIdBuffer.buffer,
+		tileData.buffers.projected.positionBuffer.buffer,
+		tileData.buffers.projected.normalBuffer.buffer,
+		tileData.buffers.projected.uvBuffer.buffer,
+		tileData.buffers.projected.textureIdBuffer.buffer,
+		tileData.buffers.hugging.positionBuffer.buffer,
+		tileData.buffers.hugging.normalBuffer.buffer,
+		tileData.buffers.hugging.uvBuffer.buffer,
+		tileData.buffers.hugging.textureIdBuffer.buffer,
+		tileData.buffers.terrainMask.positionBuffer.buffer,
+		tileData.buffers.labels.position.buffer,
+		tileData.buffers.labels.priority.buffer
 	];
 
-	for (const instance of Object.values(buffers.instances)) {
+	for (const instance of Object.values(tileData.buffers.instances)) {
 		transferables.push(instance.interleavedBufferLOD0.buffer);
 		transferables.push(instance.interleavedBufferLOD1.buffer);
 	}

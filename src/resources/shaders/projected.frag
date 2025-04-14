@@ -33,27 +33,11 @@ uniform PerMaterial {
 };
 
 #if USE_IDENTIFIABLE_FEATURES == 1
-	flat in uint vOsmId;
+flat in uint vIsHighlighted;
 
-	// Add uniform buffer for highlighted IDs
-	uniform HighlightedFeatures {
-		// Array of IDs to highlight
-		uint osmIds[128]; // You can adjust the size based on your needs
-		// Highlight color
-		vec4 highlightColor;
-	};
-
-	bool isHighlighted(uint id) {
-		for (uint i = 0u; i < 128u; i++) {
-			if (id == 0u) {
-				break;
-			}
-			if (id == osmIds[i]) {
-				return true;
-			}
-		}
-		return false;
-	}
+uniform HighlightedFeatures {
+  vec4 highlightColor;
+};
 #endif
 
 uniform sampler2DArray tMap;
@@ -94,7 +78,7 @@ void main() {
 
 	#if USE_IDENTIFIABLE_FEATURES == 1
 		// Check if this osmId should be highlighted
-		if (isHighlighted(vOsmId)) {
+		if (vIsHighlighted == 1u) {
 			// Use the configurable highlight color
 			outColor = highlightColor;
 			outGlow = vec3(0);

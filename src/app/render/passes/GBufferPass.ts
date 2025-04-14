@@ -6,7 +6,8 @@ import {
 	UniformInt1,
 	UniformMatrix4,
 	UniformTexture2DArray,
-	UniformUint1
+	UniformUint1,
+	UniformUint2
 } from "~/lib/renderer/abstract-renderer/Uniform";
 import Tile from "../../objects/Tile";
 import Mat4 from "~/lib/math/Mat4";
@@ -366,9 +367,24 @@ export default class GBufferPass extends Pass<{
 			this.projectedMeshMaterial.updateUniformBlock('PerMesh');
 
 			if (Config.IdentifiableFeatures) {
-				const ids = new Uint32Array(128);
-				ids[0] = 760727194;
-				this.projectedMeshMaterial.getUniform<UniformUint1>('osmIds[0]', 'HighlightedFeatures').value = ids;
+				const ids = new Uint32Array(128*2);
+				let mappingCount = 0;
+				for (const m of tile.idVertexMapping) {
+					if (m.id == 760727194) {
+						ids[mappingCount*2] = m.startVertexIdx;
+						ids[(mappingCount*2)+1] = m.vertexCount;
+						mappingCount++;
+					}
+					if (m.id == 68674962) {
+						ids[mappingCount*2] = m.startVertexIdx;
+						ids[(mappingCount*2)+1] = m.vertexCount;
+						mappingCount++;
+					}
+				}
+				this.projectedMeshMaterial.getUniform<UniformUint2>('vertexMapping[0]', 'FeatureIdVertexMapping').value = ids;
+				this.projectedMeshMaterial.getUniform<UniformUint2>('vertexMappingCount', 'FeatureIdVertexMapping').value[0] = mappingCount;
+				this.projectedMeshMaterial.updateUniformBlock('FeatureIdVertexMapping');
+
 				const color = new Float32Array(4);
 				color[0] = 1.0;
 				color[3] = 1.0;

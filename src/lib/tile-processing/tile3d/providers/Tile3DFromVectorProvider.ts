@@ -6,7 +6,7 @@ import VectorPolylineHandler from "~/lib/tile-processing/tile3d/handlers/VectorP
 import VectorAreaHandler from "~/lib/tile-processing/tile3d/handlers/VectorAreaHandler";
 import VectorFeatureCollection from "~/lib/tile-processing/vector/features/VectorFeatureCollection";
 import Tile3DInstance from "~/lib/tile-processing/tile3d/features/Tile3DInstance";
-import Tile3DProjectedGeometry, { Tile3DIdentifiableProjectedGeometry } from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
+import Tile3DProjectedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
 import Tile3DExtrudedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DExtrudedGeometry";
 import {applyMercatorFactorToExtrudedFeatures} from "~/lib/tile-processing/tile3d/utils";
 import Tile3DHuggingGeometry from "~/lib/tile-processing/tile3d/features/Tile3DHuggingGeometry";
@@ -291,10 +291,15 @@ export default class Tile3DFromVectorProvider implements FeatureProvider<Tile3DF
 			hugging: [],
 			terrainMask: [],
 			labels: [],
-			instances: []
+			instances: [],
+			metadata: {
+				mapping: []
+			}
 		};
 
+		let vertexIndex = 0;
 		for (const handler of handlers) {
+			handler.process();
 			const output = handler.getFeatures();
 
 			if (output) {
@@ -308,8 +313,6 @@ export default class Tile3DFromVectorProvider implements FeatureProvider<Tile3DF
 							collection.instances.push(feature as Tile3DInstance);
 							break;
 						case 'projected':
-							Config.IdentifiableFeatures ? 
-							collection.projected.push(feature as Tile3DIdentifiableProjectedGeometry) :
 							collection.projected.push(feature as Tile3DProjectedGeometry);
 							break;
 						case 'extruded':
@@ -325,6 +328,20 @@ export default class Tile3DFromVectorProvider implements FeatureProvider<Tile3DF
 							collection.labels.push(feature as Tile3DLabel);
 							break;
 					}
+				}
+
+				if (Config.IdentifiableFeatures) {
+					let metadata = handler.getMetadata();
+					if (metadata && metadata.mapping[0]) {
+						const fm = metadata.mapping[0];
+						if (fm.vertexCount == 0) {
+							continue;
+						}
+						fm.startVertexIdx = vertexIndex;
+						vertexIndex += fm.vertexCount;
+						collection.metadata.mapping.push(fm)
+					}
+					
 				}
 			}
 		}

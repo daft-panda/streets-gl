@@ -1,5 +1,6 @@
-import Tile3DBuffers, {
+import {
 	BoundingBox,
+	Tile3DBuffers,	
 	Tile3DBuffersExtruded,
 	Tile3DBuffersHugging,
 	Tile3DBuffersIdentifiableProjected,
@@ -11,7 +12,7 @@ import Tile3DFeatureCollection from "~/lib/tile-processing/tile3d/features/Tile3
 import Utils from "~/app/Utils";
 import AABB3D from "~/lib/math/AABB3D";
 import Tile3DExtrudedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DExtrudedGeometry";
-import Tile3DProjectedGeometry, { Tile3DIdentifiableProjectedGeometry } from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
+import Tile3DProjectedGeometry from "~/lib/tile-processing/tile3d/features/Tile3DProjectedGeometry";
 import Tile3DHuggingGeometry from "~/lib/tile-processing/tile3d/features/Tile3DHuggingGeometry";
 import Tile3DLabel from "~/lib/tile-processing/tile3d/features/Tile3DLabel";
 import Vec3 from "~/lib/math/Vec3";
@@ -163,10 +164,10 @@ export class Tile3DFeaturesToBuffersConverter {
 		};
 	}
 
-	private static getProjectedBuffers(f: Tile3DProjectedGeometry[]): Tile3DBuffersProjected {
-		const sortedFeatures  = f as Tile3DIdentifiableProjectedGeometry[];
-		// THIS SORT REMOVES THE OSM ID BUFFER IN WAYS I CANNOT EXPLAIN
-		// const sortedFeatures = this.sortProjectedFeatures(features);
+	private static getProjectedBuffers(features: Tile3DProjectedGeometry[]): Tile3DBuffersProjected {
+		// TODO: we depend on the order of the features for the id mapping, is the sorting really necessary?
+		//const sortedFeatures = this.sortProjectedFeatures(features);
+		const sortedFeatures = features;
 
 		const boundingBox = this.joinBoundingBoxes(sortedFeatures);
 		boundingBox.min.y = -1000;
@@ -196,21 +197,6 @@ export class Tile3DFeaturesToBuffersConverter {
 			textureIdBuffer: textureIdBufferMerged,
 			boundingBox: this.boundingBoxToFlatObject(boundingBox)
 		};
-
-		if (Config.IdentifiableFeatures) {
-			const osmIdBuffers: Uint32Array[] = [];
-			for (const feature of sortedFeatures) {
-				const idFeature = feature as Tile3DIdentifiableProjectedGeometry;
-				osmIdBuffers.push(idFeature.osmIdBuffer);
-			}
-			
-			const buffersWithIds: Tile3DBuffersIdentifiableProjected = {
-				osmIdBuffer: Utils.mergeTypedArrays(Uint32Array, osmIdBuffers),
-				...buffers
-			};
-			
-			return buffersWithIds;
-		}
 
 		return buffers;
 	}
@@ -378,7 +364,7 @@ export class Tile3DFeaturesToBuffersConverter {
 		return joined;
 	}
 
-	private static sortProjectedFeatures(features: Tile3DIdentifiableProjectedGeometry[]): Tile3DIdentifiableProjectedGeometry[] {
+	private static sortProjectedFeatures(features: Tile3DProjectedGeometry[]): Tile3DProjectedGeometry[] {
 		return features.sort((a, b) => {
 			return a.zIndex - b.zIndex;
 		});

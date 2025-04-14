@@ -13,6 +13,7 @@ import {
 } from "~/lib/tile-processing/tile3d/utils";
 import MathUtils from "~/lib/math/MathUtils";
 import Tile3DFeature from "~/lib/tile-processing/tile3d/features/Tile3DFeature";
+import { TileMetadata } from "../buffers/Tile3DBuffers";
 
 const TileSize = 611.4962158203125;
 
@@ -24,6 +25,7 @@ export default class VectorNodeHandler implements Handler {
 	private mercatorScale: number = 1;
 	private terrainHeight: number = 0;
 	private graph: RoadGraph = null;
+	private features: Tile3DFeature[] = [];
 
 	public constructor(feature: VectorNode) {
 		this.osmReference = feature.osmReference;
@@ -40,92 +42,108 @@ export default class VectorNodeHandler implements Handler {
 		this.mercatorScale = scale;
 	}
 
-	public getFeatures(): Tile3DFeature[] {
+	public process(): void {
 		if (this.isOutOfBounds()) {
-			return [];
+			return;
 		}
 
 		if (this.descriptor.type === 'tree') {
-			return [this.getTreeInstanceFeature({
+			this.features = [this.getTreeInstanceFeature({
 				height: this.descriptor.height,
 				minHeight: this.descriptor.minHeight
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'adColumn') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'adColumn',
 				rotateToNearestPath: false
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'hydrant') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'hydrant',
 				minHeight: this.descriptor.minHeight,
 				rotateToNearestPath: false
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'windTurbine') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'windTurbine',
 				rotateToNearestPath: false,
 				height: this.descriptor.height,
 				minHeight: this.descriptor.minHeight,
 				rotation: 0
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'bench') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'bench',
 				rotateToNearestPath: true,
 				rotation: this.descriptor.direction
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'picnicTable') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'picnicTable',
 				rotateToNearestPath: true
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'busStop') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'busStop',
 				rotateToNearestPath: true,
 				pathGroupId: 0
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'memorial') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'memorial',
 				minHeight: this.descriptor.minHeight,
 				rotateToNearestPath: true
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'statue') {
 			const rnd = new SeededRandom(Math.floor(this.x + this.y));
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: rnd.generate() > 0.5 ? 'statueSmall' : 'statueBig',
 				minHeight: this.descriptor.minHeight,
 				rotateToNearestPath: true
 			})];
+			return;
 		}
 
 		if (this.descriptor.type === 'sculpture') {
-			return [this.getGenericInstanceFeature({
+			this.features = [this.getGenericInstanceFeature({
 				type: 'sculpture',
 				minHeight: this.descriptor.minHeight,
 				rotateToNearestPath: true
 			})];
+			return;
 		}
+	}
 
-		return [];
+	public getFeatures(): Tile3DFeature[] {
+		return this.features;
+	}
+
+	public getMetadata(): TileMetadata | null {
+		return null;
 	}
 
 	private getGenericInstanceFeature(

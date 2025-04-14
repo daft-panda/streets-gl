@@ -26,7 +26,8 @@ import {ExtrudedTextures, ProjectedTextures} from "~/lib/tile-processing/tile3d/
 import VectorNode from "~/lib/tile-processing/vector/features/VectorNode";
 import * as Simplify from "simplify-js";
 import {SurfaceBuilderOrientation} from "~/lib/tile-processing/tile3d/builders/SurfaceBuilder";
-import Tile3DProjectedIdentifiableGeometryBuilder from "../builders/Tile3DProjectedIdentifiableGeometryBuilder";
+import Tile3DProjectedIdentifiableGeometryBuilder from "../builders/Tile3DProjectedGeometryBuilder";
+import { TileMetadata } from "../buffers/Tile3DBuffers";
 
 const TileSize = 611.4962158203125;
 
@@ -39,6 +40,7 @@ export default class VectorAreaHandler implements Handler {
 	private terrainMaxHeight: number = 0;
 	private multipolygon: Tile3DMultipolygon = null;
 	private instances: Tile3DInstance[] = [];
+	private features: Tile3DFeature[] = [];
 
 	public constructor(feature: VectorArea) {
 		this.osmReference = feature.osmReference;
@@ -218,17 +220,19 @@ export default class VectorAreaHandler implements Handler {
 		return null;
 	}
 
-	public getFeatures(): Tile3DFeature[] {
+	public process(): void {
 		switch (this.descriptor.type) {
 			case 'building':
 			case 'buildingPart':
-				return this.handleBuilding();
+				this.features = this.handleBuilding();
+				break;
 			case 'water': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Water,
 					isOriented: false,
 					zIndex: ZIndexMap.Water
 				});
+				break;
 			}
 			case 'pitch': {
 				const textureIdMap = {
@@ -240,7 +244,7 @@ export default class VectorAreaHandler implements Handler {
 				const textureId = textureIdMap[this.descriptor.pitchType];
 
 				if (textureId === ProjectedTextures.GenericPitch) {
-					return this.handleGenericSurface({
+					this.features = this.handleGenericSurface({
 						textureId,
 						isOriented: false,
 						uvScale: 20,
@@ -248,28 +252,31 @@ export default class VectorAreaHandler implements Handler {
 					});
 				}
 
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId,
 					isOriented: true,
 					stretch: true,
 					zIndex: ZIndexMap.Pitch
 				});
+				break;
 			}
 			case 'manicuredGrass': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.ManicuredGrass,
 					isOriented: false,
 					zIndex: ZIndexMap.ManicuredGrass,
 					uvScale: 20,
 				});
+				break;
 			}
 			case 'garden': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Garden,
 					isOriented: false,
 					zIndex: ZIndexMap.Garden,
 					uvScale: 16,
 				});
+				break;
 			}
 			case 'construction': {
 				const features: Tile3DFeature[] = this.handleGenericSurface({
@@ -281,46 +288,51 @@ export default class VectorAreaHandler implements Handler {
 
 				features.push(...this.instances);
 
-				return features;
+				this.features = features;
+				break;
 			}
 			case 'buildingConstruction': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Soil,
 					isOriented: false,
 					zIndex: ZIndexMap.Construction,
 					uvScale: 25,
 				});
+				break;
 			}
 			case 'grass': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Grass,
 					isOriented: false,
 					zIndex: ZIndexMap.Grass,
 					uvScale: 25,
 				});
+				break;
 			}
 			case 'rock': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Rock,
 					isOriented: false,
 					zIndex: ZIndexMap.Rock,
 					uvScale: 32,
 				});
+				break;
 			}
 			case 'sand': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Sand,
 					isOriented: false,
 					zIndex: ZIndexMap.Sand,
 					uvScale: 12,
 				});
+				break;
 			}
 			case 'farmland': {
 				const rnd = new SeededRandom(this.osmReference.id);
 				const textureCount = 3;
 				const texture = Math.floor(rnd.generate() * textureCount);
 
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Farmland0 + texture,
 					isOriented: true,
 					stretch: false,
@@ -328,38 +340,43 @@ export default class VectorAreaHandler implements Handler {
 					zIndex: ZIndexMap.Farmland,
 					uvScale: 50
 				});
+				break;
 			}
 			case 'asphalt': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Asphalt,
 					isOriented: false,
 					zIndex: ZIndexMap.AsphaltArea,
 					uvScale: 20,
 					addUsageMask: true,
 				});
+				break;
 			}
 			case 'roadwayArea': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Asphalt,
 					isOriented: false,
 					zIndex: ZIndexMap.RoadwayArea,
 					uvScale: 20,
 					addUsageMask: true,
 				});
+				break;
 			}
 			case 'roadwayIntersection': {
-				return this.handleRoadIntersection();
+				this.features = this.handleRoadIntersection();
+				break;
 			}
 			case 'pavement': {
-				return this.handleGenericSurface({
+				this.features = this.handleGenericSurface({
 					textureId: ProjectedTextures.Pavement,
 					isOriented: false,
 					zIndex: ZIndexMap.FootwayArea,
 					uvScale: 10,
 				});
+				break;
 			}
 			case 'helipad': {
-				return [
+				this.features = [
 					...this.handleGenericSurface({
 						textureId: ProjectedTextures.Helipad,
 						isOriented: true,
@@ -373,12 +390,14 @@ export default class VectorAreaHandler implements Handler {
 						uvScale: 10,
 					})
 				];
+				break;
 			}
 			case 'forest': {
-				return this.instances;
+				this.features = this.instances;
+				break;
 			}
 			case 'shrubbery': {
-				return [
+				this.features = [
 					...this.instances,
 					...this.handleGenericSurface({
 						textureId: ProjectedTextures.ForestFloor,
@@ -387,10 +406,17 @@ export default class VectorAreaHandler implements Handler {
 						uvScale: 15,
 					})
 				];
+				break;
 			}
 		}
+	}
 
-		return [];
+	public getFeatures(): Tile3DFeature[] {
+		return this.features;
+	}
+
+	public getMetadata(): TileMetadata | null {
+		return null;
 	}
 
 	private handleRoadIntersection(): Tile3DFeature[] {

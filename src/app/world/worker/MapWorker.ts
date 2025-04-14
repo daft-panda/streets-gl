@@ -1,6 +1,6 @@
 import Vec2 from "~/lib/math/Vec2";
 import {WorkerMessage} from "~/app/world/worker/WorkerMessage";
-import Tile3DBuffers from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
+import TileData from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
 
 export interface TileRequestParams {
 	overpassEndpoint: string;
@@ -14,7 +14,7 @@ export default class MapWorker {
 	private worker: Worker;
 	public queueLength = 0;
 	private tilesInProgress: Map<string, {
-		resolve: (value: Tile3DBuffers) => void;
+		resolve: (value: TileData) => void;
 		reject: (reason?: any) => void;
 	}> = new Map();
 	private readonly terrainHeightCallback: (positions: Float64Array) => Float64Array;
@@ -26,10 +26,10 @@ export default class MapWorker {
 		this.worker.addEventListener('message', (e: MessageEvent) => this.processMessage(e));
 	}
 
-	public async requestTile(x: number, y: number, params: TileRequestParams): Promise<Tile3DBuffers> {
+	public async requestTile(x: number, y: number, params: TileRequestParams): Promise<TileData> {
 		this.queueLength++;
 
-		const promise = new Promise<Tile3DBuffers>((resolve, reject) => {
+		const promise = new Promise<TileData>((resolve, reject) => {
 			this.tilesInProgress.set(`${x},${y}`, {resolve, reject});
 		});
 

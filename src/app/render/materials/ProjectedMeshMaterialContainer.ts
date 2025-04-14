@@ -117,8 +117,14 @@ export default class ProjectedMeshMaterialContainer extends MaterialContainer {
 
 		if (Config.IdentifiableFeatures) {
 			uniforms.push({
-				name: 'osmIds[0]',
-				block: 'HighlightedFeatures',
+				name: 'vertexMapping[0]',
+				block: 'FeatureIdVertexMapping',
+				type: RendererTypes.UniformType.Uint2,
+				value: new Uint32Array(2)
+			});
+			uniforms.push({
+				name: 'vertexMappingCount',
+				block: 'FeatureIdVertexMapping',
 				type: RendererTypes.UniformType.Uint1,
 				value: new Uint32Array(1)
 			});

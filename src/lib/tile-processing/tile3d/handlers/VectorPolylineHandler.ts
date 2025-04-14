@@ -14,8 +14,9 @@ import Road from "~/lib/road-graph/Road";
 import Intersection, {IntersectionDirection} from "~/lib/road-graph/Intersection";
 import {VectorAreaDescriptor, VectorPolylineDescriptor} from "~/lib/tile-processing/vector/qualifiers/descriptors";
 import {ProjectedTextures} from "~/lib/tile-processing/tile3d/textures";
-import Tile3DProjectedIdentifiableGeometryBuilder from "../builders/Tile3DProjectedIdentifiableGeometryBuilder";
 import Config from "~/app/Config";
+import { FeatureIdVertexMapping, TileMetadata } from "../buffers/Tile3DBuffers";
+import { appendArrayInPlace } from "../../utils";
 
 export default class VectorPolylineHandler implements Handler {
 	private readonly osmReference: OSMReference;
@@ -25,6 +26,8 @@ export default class VectorPolylineHandler implements Handler {
 	private graph: RoadGraph = null;
 	private graphRoad: Road = null;
 	private graphGroup: number = -1;
+	private features: Tile3DFeature[] = [];
+	private mapping: FeatureIdVertexMapping[] = [];
 
 	public constructor(feature: VectorPolyline, identifyFeatures?: boolean) {
 		this.osmReference = feature.osmReference;
@@ -40,23 +43,35 @@ export default class VectorPolylineHandler implements Handler {
 		this.mercatorScale = scale;
 	}
 
-	public getFeatures(): Tile3DFeature[] {
+	public process(): void {
 		switch (this.descriptor.type) {
 			case 'path': {
-				return this.handlePath();
+				this.handlePath();
+				break;
 			}
 			case 'fence': {
-				return [this.handleFence()];
+				this.features = [this.handleFence()];
+				break;
 			}
 			case 'wall': {
-				return [this.handleWall()];
+				this.features = [this.handleWall()];
+				break;
 			}
 			case 'waterway': {
-				return [this.handleWaterway()];
+				this.features = [this.handleWaterway()];
+				break;
 			}
 		}
+	}
 
-		return [];
+	public getFeatures(): Tile3DFeature[] {
+		return this.features;
+	}
+
+	public getMetadata(): TileMetadata | null {
+		return {
+			mapping: this.mapping
+		}
 	}
 
 	public setRoadGraph(graph: RoadGraph): void {
@@ -93,8 +108,9 @@ export default class VectorPolylineHandler implements Handler {
 		return this.graphRoad;
 	}
 
-	private handlePath(): Tile3DFeature[] {
+	private handlePath(): void {
 		const features: Tile3DFeature[] = [];
+		const mapping: FeatureIdVertexMapping[] = [];
 		const side = VectorPolylineHandler.getRoadSideFromDescriptor(this.descriptor.side);
 		const params = VectorPolylineHandler.getPathParams(
 			this.descriptor.osmId,
@@ -109,11 +125,11 @@ export default class VectorPolylineHandler implements Handler {
 		const {vertices, vertexAdjacentToStart, vertexAdjacentToEnd} = this.getPathBuilderVertices();
 
 		if (vertices.length < 2) {
-			return features;
+			this.features = features;
 		}
 
 		for (const path of params) {
-			const builder = Config.IdentifiableFeatures ? new Tile3DProjectedIdentifiableGeometryBuilder() : new Tile3DProjectedGeometryBuilder();
+			const builder = new Tile3DProjectedGeometryBuilder();
 			builder.setZIndex(path.zIndex);
 			builder.addRing(Tile3DRingType.Outer, vertices);
 
@@ -132,13 +148,17 @@ export default class VectorPolylineHandler implements Handler {
 			});
 
 			features.push(builder.getGeometry());
+			if (Config.IdentifiableFeatures) {
+				appendArrayInPlace(mapping, builder.getVertexIdMapping());
+			}
 
 			if (path.needsUsageMask) {
 				features.push(builder.getTerrainMaskGeometry());
 			}
 		}
 
-		return features;
+		this.features = features;
+		this.mapping = mapping;
 	}
 
 	private getPathBuilderVertices(): {
@@ -212,7 +232,7 @@ export default class VectorPolylineHandler implements Handler {
 	}
 
 	private handleFence(): Tile3DHuggingGeometry {
-		const builder = Config.IdentifiableFeatures ? new Tile3DProjectedIdentifiableGeometryBuilder() : new Tile3DProjectedGeometryBuilder();
+		const builder = new Tile3DProjectedGeometryBuilder();
 		builder.addRing(Tile3DRingType.Outer, this.vertices);
 
 		const {width, textureId} = VectorPolylineHandler.getFenceParams(
@@ -232,7 +252,7 @@ export default class VectorPolylineHandler implements Handler {
 	}
 
 	private handleWall(): Tile3DHuggingGeometry {
-		const builder = Config.IdentifiableFeatures ? new Tile3DProjectedIdentifiableGeometryBuilder() : new Tile3DProjectedGeometryBuilder();
+		const builder = new Tile3DProjectedGeometryBuilder();
 		builder.addRing(Tile3DRingType.Outer, this.vertices);
 
 		const params = VectorPolylineHandler.getWallParams(this.descriptor.wallType);
@@ -251,7 +271,7 @@ export default class VectorPolylineHandler implements Handler {
 	}
 
 	private handleWaterway(): Tile3DProjectedGeometry {
-		const builder = Config.IdentifiableFeatures ? new Tile3DProjectedIdentifiableGeometryBuilder() : new Tile3DProjectedGeometryBuilder();
+		const builder = new Tile3DProjectedGeometryBuilder();
 		builder.setZIndex(ZIndexMap.Waterway);
 		builder.addRing(Tile3DRingType.Outer, this.vertices);
 

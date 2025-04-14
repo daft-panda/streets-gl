@@ -12,13 +12,13 @@ import Camera from "~/lib/core/Camera";
 import TerrainSystem from "~/app/systems/TerrainSystem";
 import {HeightLoaderTile} from "~/app/terrain/TerrainHeightLoader";
 import ControlsSystem, {NavigationMode} from "~/app/systems/ControlsSystem";
-import Tile3DBuffers from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
+import TileData from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
 import SettingsSystem from "~/app/systems/SettingsSystem";
 
 interface QueueItem {
 	position: Vec2;
 	onBeforeLoad: () => Promise<void>;
-	onLoad: (tileData: Tile3DBuffers) => Promise<void>;
+	onLoad: (tileData: TileData) => Promise<void>;
 }
 
 export default class TileSystem extends System {

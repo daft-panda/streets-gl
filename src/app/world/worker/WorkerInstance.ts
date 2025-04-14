@@ -1,10 +1,10 @@
 import Tile3DFromVectorProvider from "~/lib/tile-processing/tile3d/providers/Tile3DFromVectorProvider";
 import {Tile3DFeaturesToBuffersConverter} from "~/lib/tile-processing/tile3d/buffers/Tile3DFeaturesToBuffersConverter";
 import {WorkerMessage} from "~/app/world/worker/WorkerMessage";
-import Tile3DBuffers from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
-import {getTile3DBuffersTransferables} from "~/lib/tile-processing/tile3d/utils";
+import {getTile3DBuffersTransferables as getTileDataTransferables} from "~/lib/tile-processing/tile3d/utils";
 import MathUtils from "~/lib/math/MathUtils";
 import {SkeletonBuilder} from 'straight-skeleton';
+import TileData from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
 
 const ctx: Worker = self as any;
 
@@ -59,9 +59,13 @@ class WorkerInstance {
 
 		collectionPromise.then(collection => {
 			const buffers = Tile3DFeaturesToBuffersConverter.convert(collection);
+			const tileData: TileData = {
+				buffers,
+				metadata: collection.metadata
+			}
 			//Tile3DFeaturesToBuffersConverter.tileToWorld(buffers, WorkerInstance.TileZoom);
 
-			this.sendBuffers(x, y, buffers);
+			this.sendTileData(x, y, tileData);
 		}).catch(error => {
 			console.error(error);
 
@@ -73,14 +77,14 @@ class WorkerInstance {
 		this.ctx.postMessage(msg, transferables);
 	}
 
-	private sendBuffers(x: number, y: number, buffers: Tile3DBuffers): void {
+	private sendTileData(x: number, y: number, tileData: TileData): void {
 		this.sendMessage(
 			{
 				type: WorkerMessage.FromWorkerType.Success,
 				tile: [x, y],
-				payload: buffers
+				payload: tileData
 			},
-			getTile3DBuffersTransferables(buffers)
+			getTileDataTransferables(tileData)
 		)
 	}
 

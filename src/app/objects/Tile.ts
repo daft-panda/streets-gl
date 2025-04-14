@@ -5,7 +5,8 @@ import Vec2 from "~/lib/math/Vec2";
 import TileExtrudedMesh from "./TileExtrudedMesh";
 import TileProjectedMesh from "./TileProjectedMesh";
 import TileLabelBuffers from "./TileLabelBuffers";
-import Tile3DBuffers, {
+import TileData, {
+	FeatureIdVertexMapping,
 	Tile3DBuffersExtruded,
 	Tile3DBuffersLabels
 } from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
@@ -56,6 +57,7 @@ export default class Tile extends Object3D {
 	public readonly labelBuffersList: TileLabelBuffers[] = [];
 	public labelsAABB: AABB3D = null;
 	public readonly instanceBuffers: TileInstanceBuffers = new Map();
+	public idVertexMapping: FeatureIdVertexMapping[] = []; 
 
 	public extrudedMesh: TileExtrudedMesh;
 	public projectedMesh: TileProjectedMesh;
@@ -88,7 +90,9 @@ export default class Tile extends Object3D {
 		this.updateMatrix();
 	}
 
-	public load(buffers: Tile3DBuffers): void {
+	public load(data: TileData): void {
+		const {buffers, metadata: mapping} = data;
+		this.idVertexMapping = mapping.mapping;
 		this.updateExtrudedGeometryOffsets(buffers.extruded);
 
 		this.extrudedMesh = new TileExtrudedMesh(buffers.extruded);

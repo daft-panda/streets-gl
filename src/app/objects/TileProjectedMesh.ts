@@ -1,5 +1,5 @@
 import RenderableObject3D from "./RenderableObject3D";
-import AbstractMesh from "~/lib/renderer/abstract-renderer/AbstractMesh";
+import AbstractMesh, { AbstractMeshParams } from "~/lib/renderer/abstract-renderer/AbstractMesh";
 import AbstractRenderer from "~/lib/renderer/abstract-renderer/AbstractRenderer";
 import {RendererTypes} from "~/lib/renderer/RendererTypes";
 import {Tile3DBuffersIdentifiableProjected, Tile3DBuffersProjected} from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
@@ -26,7 +26,7 @@ export default class TileProjectedMesh extends RenderableObject3D {
 
 	public updateMesh(renderer: AbstractRenderer): void {
 		if (!this.mesh) {
-			const params = {
+			const params: AbstractMeshParams = {
 				attributes: [
 					renderer.createAttribute({
 						name: 'position',
@@ -70,19 +70,6 @@ export default class TileProjectedMesh extends RenderableObject3D {
 					})
 				]
 			};
-			if (Config.IdentifiableFeatures) {
-				const buffers = this.buffers as Tile3DBuffersIdentifiableProjected;
-				params.attributes.push(renderer.createAttribute({
-					name: 'osmId',
-					size: 1,
-					type: RendererTypes.AttributeType.UnsignedInt,
-					format: RendererTypes.AttributeFormat.Integer,
-					normalized: false,
-					buffer: renderer.createAttributeBuffer({
-						data: buffers.osmIdBuffer
-					})
-				}))
-			}
 			this.mesh = renderer.createMesh(params);
 		}
 	}
@@ -93,7 +80,6 @@ export default class TileProjectedMesh extends RenderableObject3D {
 			this.mesh.getAttribute('normal').buffer.delete();
 			this.mesh.getAttribute('uv').buffer.delete();
 			this.mesh.getAttribute('textureId').buffer.delete();
-			this.mesh.getAttribute('osmId').buffer.delete();
 
 			this.mesh.delete();
 		}

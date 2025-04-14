@@ -7,11 +7,13 @@ import {NodeType} from "~/lib/tile-processing/powerline-graph/PowerlineNode";
 import Vec2 from "~/lib/math/Vec2";
 import Tile3DInstance, {Tile3DInstanceType} from "~/lib/tile-processing/tile3d/features/Tile3DInstance";
 import WireGroupBuilder from "~/lib/tile-processing/tile3d/builders/WireGroupBuilder";
+import { TileMetadata } from "../buffers/Tile3DBuffers";
 
 export default class PowerlineHandler implements Handler {
 	private readonly graph: PowerlineGraph = new PowerlineGraph();
 	private mercatorScale: number = 1;
 	private heightMap: Map<string, number> = null;
+	private instances: Tile3DInstance[] = [];
 
 	public constructor(features: VectorFeatureCollection) {
 		for (const feature of features.nodes) {
@@ -33,7 +35,7 @@ export default class PowerlineHandler implements Handler {
 		this.graph.createEntities();
 	}
 
-	private buildInstances(): Tile3DInstance[] {
+	private buildInstances(): void {
 		const instances: Tile3DInstance[] = [];
 
 		for (const node of this.graph.entities.nodes) {
@@ -50,11 +52,19 @@ export default class PowerlineHandler implements Handler {
 			instances.push(...segments);
 		}
 
-		return instances;
+		this.instances = instances;
+	}
+
+	public process(): void {
+		this.buildInstances();
 	}
 
 	public getFeatures(): Tile3DFeature[] {
-		return this.buildInstances();
+		return this.instances;
+	}
+
+	public getMetadata(): TileMetadata | null {
+		return null;
 	}
 
 	public getRequestedHeightPositions(): RequestedHeightParams {
