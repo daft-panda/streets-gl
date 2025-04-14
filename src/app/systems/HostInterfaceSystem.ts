@@ -16,47 +16,29 @@ import TileLoadingSystem from "./TileLoadingSystem";
 import TileObjectsSystem from "./TileObjectsSystem";
 import TileSystem from "./TileSystem";
 import VehicleSystem from "./VehicleSystem";
+import { HostInterface, HostInterfaceSystemInterface, HostInterfaceSystemParameters } from "~/index";
 
-export interface HostInterfaceSystemParameters {
-    highlightObjects: {
-        osmIds: [];
-    };
+export function createHostInterfaceSystem(): HostInterfaceSystemInterface {
+    return new HostInterfaceSystem();
 }
 
-export interface HostInterface {
-    canvas: HTMLCanvasElement;
-    systems: {
-        vehicle: boolean;
-        picking: boolean;
-    };
-    eventHandlers: {
-        fileLoadingProgressUpdate: (percentDone: number) => void;
-        loadingFile: (fileName: string) => void;
-        frameTimeUpdate: (frameTime: number) => void;
-    };
-    parameterProvider: (deltaTime: number) => HostInterfaceSystemParameters;
-}
-
-export default class HostInterfaceSystem extends System {
+export default class HostInterfaceSystem extends System implements HostInterfaceSystemInterface {
     private hostInterface: HostInterface;
     private loop = (deltaTime: number): void => this.update(deltaTime);
 	private time = 0;
     private animationFrameRequestId: number;
     private cachedSystemParameters: HostInterfaceSystemParameters | null = null;
     
-    public constructor(hostInterface: HostInterface) {
-        super();
-        this.hostInterface = hostInterface;
-    }
-
     public override postInit(): void {
         
     }
 
-	public async init(): Promise<void> {
+	public async init(hostInterface: HostInterface): Promise<void> {
         if (this.systemManager) {
             throw new Error("The HostInterfaceSystem needs to be the entry point, it cannot operate on a running instance");
         }
+
+        this.hostInterface = hostInterface;
 		this.systemManager = new SystemManager();
 
 		this.systemManager.addSystems(SettingsSystem);

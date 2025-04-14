@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"module": "esnext",
+		"target": "ESNext",
+		"lib": [
+			"ESNext",
+			"dom"
+		],
+		"allowJs": true,
+		"sourceMap": true,
+		"moduleResolution": "node",
+		"alwaysStrict": true,
+		"noImplicitAny": false,
+		"noImplicitThis": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"skipLibCheck": true,
+		"jsx": "react",
+		"baseUrl": "./src",
+		"paths": {
+			"~/*": ["*"]
+		}
+	},
+	"include": [
+		"src/index.ts"
+	]
+}

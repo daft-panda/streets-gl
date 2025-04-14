@@ -9,6 +9,7 @@
 		"lint": "npx eslint src --no-fix --max-warnings 0",
 		"lint:fix": "npx eslint src --fix",
 		"typecheck": "tsc --noEmit -p ./tsconfig.json",
+		"declaration": "tsc --declaration --emitDeclarationOnly --stripInternal  --outDir ./dist -p ./tsconfig.lib.json",
 		"test": "jest"
 	},
 	"author": "StrandedKitty",
@@ -16,6 +17,11 @@
 		"type": "git",
 		"url": "https://github.com/StrandedKitty/streets-gl.git"
 	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+	  "/dist"
+	],
 	"license": "MIT",
 	"devDependencies": {
 		"@types/d3": "^7.4.3",
