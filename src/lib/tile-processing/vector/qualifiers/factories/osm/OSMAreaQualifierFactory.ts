@@ -7,7 +7,7 @@ import getBuildingParamsFromOSMTags
 import getPitchTypeFromOSMTags from "~/lib/tile-processing/vector/qualifiers/factories/osm/helpers/getPitchTypeFromOSMTags";
 
 export default class OSMAreaQualifierFactory extends AbstractQualifierFactory<VectorAreaDescriptor, Record<string, string>> {
-	public fromTags(tags: Record<string, string>): Qualifier<VectorAreaDescriptor>[] {
+	public fromTags(osmId: number, tags: Record<string, string>): Qualifier<VectorAreaDescriptor>[] {
 		if (isUnderground(tags)) {
 			return null;
 		}

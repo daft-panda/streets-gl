@@ -141,7 +141,6 @@ export default class TileLoadingSystem extends System {
 			tileServerEndpoint: Config.TileServerEndpoint,
 			vectorTilesEndpointTemplate: Config.TilesEndpointTemplate,
 			isTerrainHeightEnabled: isTerrainHeightEnabled,
-      identifiableFeatures: Config.IdentifiableFeatures,
 		}).then(result => {
 			onLoad(result);
 		}, error => {

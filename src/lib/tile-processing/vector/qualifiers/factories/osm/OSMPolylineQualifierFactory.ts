@@ -23,7 +23,7 @@ import getWaterwayParamsFromTags
 	from "~/lib/tile-processing/vector/qualifiers/factories/osm/helpers/getWaterwayParamsFromTags";
 
 export default class OSMPolylineQualifierFactory extends AbstractQualifierFactory<VectorPolylineDescriptor, Record<string, string>> {
-	public fromTags(tags: Record<string, string>): Qualifier<VectorPolylineDescriptor>[] {
+	public fromTags(osmId: number, tags: Record<string, string>): Qualifier<VectorPolylineDescriptor>[] {
 		if (isUnderground(tags) || tags.area === 'yes') {
 			return null;
 		}
@@ -37,7 +37,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 
 			const descriptor: VectorPolylineDescriptor = {
 				type: 'path',
-				pathMaterial: params.material
+				pathMaterial: params.material,
+				osmId
 			};
 
 			switch (params.type) {
@@ -114,7 +115,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 							type: 'path',
 							pathType: 'cycleway',
 							width: roadWidth + cyclewayWidth * 2,
-							side: cyclewaySide
+							side: cyclewaySide,
+							osmId
 						}
 					});
 				}
@@ -127,7 +129,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 								type: 'path',
 								pathType: 'footway',
 								width: roadWidth + sidewalkWidth * 2 + (cyclewaySide === 'both' ? cyclewayWidth * 2 : 0),
-								side: sidewalkSide
+								side: sidewalkSide,
+								osmId
 							}
 						});
 					} else {
@@ -141,7 +144,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 									type: 'path',
 									pathType: 'footway',
 									width: width,
-									side: 'left'
+									side: 'left',
+									osmId
 								}
 							});
 						}
@@ -156,7 +160,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 									type: 'path',
 									pathType: 'footway',
 									width: width,
-									side: 'right'
+									side: 'right',
+									osmId
 								}
 							});
 						}
@@ -175,7 +180,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 				data: {
 					type: 'path',
 					pathType: 'runway',
-					width: width
+					width: width,
+					osmId
 				}
 			}];
 		}
@@ -195,7 +201,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 				data: {
 					type: 'path',
 					pathType: type,
-					width: width
+					width: width,
+					osmId
 				}
 			}];
 		}
@@ -215,7 +222,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 					type: 'fence',
 					fenceMaterial: fenceParams.material,
 					height,
-					minHeight
+					minHeight,
+					osmId
 				}
 			}];
 		}
@@ -227,6 +235,7 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 					type: 'wall',
 					wallType: 'hedge',
 					height: parseHeight(tags.height, 1),
+					osmId
 				}
 			}];
 		}
@@ -239,7 +248,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 				data: {
 					type: 'wall',
 					wallType: material,
-					height: height
+					height: height,
+					osmId
 				}
 			}];
 		}
@@ -248,7 +258,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 			return [{
 				type: QualifierType.Descriptor,
 				data: {
-					type: 'powerLine'
+					type: 'powerLine',
+					osmId
 				}
 			}];
 		}
@@ -277,7 +288,8 @@ export default class OSMPolylineQualifierFactory extends AbstractQualifierFactor
 					type: QualifierType.Descriptor,
 					data: {
 						type: 'waterway',
-						width: params.width
+						width: params.width,
+						osmId
 					}
 				}];
 			}

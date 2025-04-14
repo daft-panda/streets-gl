@@ -29,7 +29,7 @@ export default class OSMNodeHandler implements OSMHandler {
 
 	private getFeaturesFromTags(): VectorFeature[] {
 		const features: VectorFeature[] = [];
-		const qualifiers = new OSMNodeQualifierFactory().fromTags(this.tags);
+		const qualifiers = new OSMNodeQualifierFactory().fromTags(this.osmElement.id, this.tags);
 
 		if (!qualifiers) {
 			return features;

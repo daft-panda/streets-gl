@@ -24,7 +24,7 @@ export default class VectorTilePointHandler implements VectorTileHandler {
 
 	public getFeatures(): VectorFeature[] {
 		const features: VectorFeature[] = [];
-		const qualifiers = new VectorTileNodeQualifierFactory().fromTags(this.tags);
+		const qualifiers = new VectorTileNodeQualifierFactory().fromTags(this.osmReference.id, this.tags);
 
 		if (!qualifiers) {
 			return [];

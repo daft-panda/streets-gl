@@ -43,7 +43,7 @@ export default class OSMWayHandler implements OSMHandler {
 
 	private getFeaturesFromPolylineTags(): VectorFeature[] {
 		const features: VectorFeature[] = [];
-		const qualifiers = new OSMPolylineQualifierFactory().fromTags(this.tags);
+		const qualifiers = new OSMPolylineQualifierFactory().fromTags(this.osmElement.id, this.tags);
 
 		if (!qualifiers) {
 			return features;
@@ -90,7 +90,7 @@ export default class OSMWayHandler implements OSMHandler {
 			return features;
 		}
 
-		const qualifiers = new OSMAreaQualifierFactory().fromTags(this.tags);
+		const qualifiers = new OSMAreaQualifierFactory().fromTags(this.osmElement.id, this.tags);
 
 		if (!qualifiers) {
 			return features;

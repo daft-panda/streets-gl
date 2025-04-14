@@ -36,7 +36,7 @@ export default class VectorTilePolygonHandler implements VectorTileHandler {
 
 	public getFeatures(): VectorFeature[] {
 		const features: VectorFeature[] = [];
-		const qualifiers = new VectorTileAreaQualifierFactory().fromTags(this.tags);
+		const qualifiers = new VectorTileAreaQualifierFactory().fromTags(this.osmReference.id, this.tags);
 
 		if (!qualifiers) {
 			return [];

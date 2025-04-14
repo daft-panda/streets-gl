@@ -8,7 +8,7 @@ import getFeatureHeightAndMinHeight
 	from "~/lib/tile-processing/vector/qualifiers/factories/vector-tile/helpers/getHeightAndMinHeight";
 
 export default class VectorTileNodeQualifierFactory extends AbstractQualifierFactory<VectorNodeDescriptor, VectorTile.FeatureTags> {
-	public fromTags(tags: VectorTile.FeatureTags): Qualifier<VectorNodeDescriptor>[] {
+	public fromTags(osmId: number, tags: VectorTile.FeatureTags): Qualifier<VectorNodeDescriptor>[] {
 		if (tags.type === 'tree') {
 			const [height, minHeight] = getFeatureHeightAndMinHeight(tags);
 

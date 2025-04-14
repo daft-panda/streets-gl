@@ -73,7 +73,7 @@ export default class OSMRelationHandler implements OSMHandler {
 
 	private getFeaturesFromAreaTags(): VectorArea[] {
 		const features: VectorArea[] = [];
-		const qualifiers = new OSMAreaQualifierFactory().fromTags(this.tags);
+		const qualifiers = new OSMAreaQualifierFactory().fromTags(this.osmElement.id, this.tags);
 
 		if (!qualifiers) {
 			return [];

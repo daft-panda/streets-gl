@@ -37,7 +37,7 @@ export default class VectorTileAreaQualifierFactory extends AbstractQualifierFac
 	}
 
 
-	public fromTags(tags: VectorTile.FeatureTags): Qualifier<VectorAreaDescriptor>[] {
+	public fromTags(osmId: number, tags: VectorTile.FeatureTags): Qualifier<VectorAreaDescriptor>[] {
 		if (tags.type === 'building') {
 			if (tags.buildingType === 'construction') {
 				return [{

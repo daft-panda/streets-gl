@@ -12,7 +12,7 @@ import getTreeTypeFromTags from "~/lib/tile-processing/vector/qualifiers/factori
 import getTreeHeight from "./helpers/getTreeHeight";
 
 export default class OSMNodeQualifierFactory extends AbstractQualifierFactory<VectorNodeDescriptor, Record<string, string>> {
-	public fromTags(tags: Record<string, string>): Qualifier<VectorNodeDescriptor>[] {
+	public fromTags(osmId: number, tags: Record<string, string>): Qualifier<VectorNodeDescriptor>[] {
 		if (isUnderground(tags)) {
 			return null;
 		}
