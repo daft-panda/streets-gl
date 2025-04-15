@@ -1,4 +1,4 @@
-import {OverpassEndpoint} from "~/app/systems/TileLoadingSystem";
+import { OverpassEndpoint } from "streets-gl-lib/dist/lib/src/core/systems/TileLoadingSystem";
 
 export default interface UIActions {
 	updateRenderGraph: () => void;

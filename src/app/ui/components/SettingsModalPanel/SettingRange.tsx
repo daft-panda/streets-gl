@@ -2,8 +2,8 @@ import React, {useContext} from "react";
 import styles from "./Setting.scss";
 import {AtomsContext} from "~/app/ui/UI";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {SettingsSchemaRangeScale} from "~/app/settings/SettingsSchema";
 import Setting from "./Setting";
+import { SettingsSchemaRangeScale } from "streets-gl-lib/dist/lib/src/core/settings/SettingsSchema";
 
 const logToLinear = (min: number, max: number, value: number): number => {
 	const norm = (value - min) / (max - min);

@@ -1,78 +1,72 @@
-import RenderSystem from "./systems/RenderSystem";
-import TileSystem from "./systems/TileSystem";
-import ControlsSystem from "./systems/ControlsSystem";
-import PickingSystem from "./systems/PickingSystem";
-import CursorStyleSystem from './systems/CursorStyleSystem';
-import SystemManager from "./SystemManager";
-import TileObjectsSystem from "./systems/TileObjectsSystem";
-import TileLoadingSystem from "./systems/TileLoadingSystem";
-import MapWorkerSystem from "./systems/MapWorkerSystem";
-import MapTimeSystem from "./systems/MapTimeSystem";
+import { AbstractSystemType } from 'streets-gl-lib/dist/lib/src/core/SystemManager';
 import UISystem from "./systems/UISystem";
-import SceneSystem from './systems/SceneSystem';
-import ResourceLoader, {ResourceJSON} from './world/ResourceLoader';
-import resourcesList from '../resources/resources.json';
-import VehicleSystem from "./systems/VehicleSystem";
-import TerrainSystem from "./systems/TerrainSystem";
-import SettingsSystem from "~/app/systems/SettingsSystem";
-import SlippyMapSystem from "~/app/systems/SlippyMapSystem";
+import { createHostInterfaceManager, HostInterface, HostInterfaceManagerInterface } from "streets-gl-lib";
+import System from "streets-gl-lib/dist/lib/src/core/System";
 
 class App {
-	private loop = (deltaTime: number): void => this.update(deltaTime);
-	private time = 0;
-	private systemManager: SystemManager;
+	private hostInterfaceSystem: HostInterfaceManagerInterface;
+	private canvas: HTMLCanvasElement;
+	private uiSystem: UISystem;
 
 	public constructor() {
 		this.init();
 	}
 
-	private init(): void {
-		this.systemManager = new SystemManager();
-
-		this.systemManager.addSystems(SettingsSystem);
-		this.systemManager.addSystems(UISystem);
-
-		ResourceLoader.addFromJSON(resourcesList as ResourceJSON);
-		ResourceLoader.load({
-			onFileLoad: (loaded: number, total: number) => {
-				this.systemManager.getSystem(UISystem).setResourcesLoadingProgress(loaded / total);
+	private async init(): Promise<void> {
+		this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
+		
+		// Initialize the core library
+		this.hostInterfaceSystem = createHostInterfaceManager();
+		this.uiSystem = this.hostInterfaceSystem.addSystem(UISystem) as UISystem;
+		
+		// Set up host interface with canvas and event handlers
+		const hi: HostInterface = {
+			canvas: this.canvas,
+			systems: {
+				vehicle: true,
+				picking: true
 			},
-			onLoadedFileNameChange: (name: string) => {
-				this.systemManager.getSystem(UISystem).setResourceInProgressPath(name);
+			eventHandlers: {
+				fileLoadingProgressUpdate: (percentDone: number): void => {
+					this.uiSystem.setResourcesLoadingProgress(percentDone);
+				},
+				loadingFile: (fileName: string): void => {
+					this.uiSystem.setResourceInProgressPath(fileName);
+				},
+				frameTimeUpdate: (frameTime: number): void => {
+					this.uiSystem.updateFrameTime(frameTime);
+				},
+				activeFeatureChanged(_type, _id): void {
+					
+				},
+			},
+			// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+			parameterProvider: (_deltaTime: number) => {
+				// This is where we can provide parameters to the renderer
+				return {
+					highlightObjects: {
+						osmIds: [] // ID of objects to highlight
+					},
+					mapTime: 0
+				};
 			}
-		}).then(() => {
-			this.systemManager.addSystems(
-				ControlsSystem,
-				MapTimeSystem,
-				TerrainSystem,
-				TileSystem,
-				SceneSystem,
-				CursorStyleSystem,
-				PickingSystem,
-				TileObjectsSystem,
-				SlippyMapSystem,
-				VehicleSystem,
-				RenderSystem,
-				MapWorkerSystem,
-				TileLoadingSystem,
-			);
-		});
-
-		this.update();
+		};
+		
+		await this.hostInterfaceSystem.init(hi);
+		
+		
+		// Handle window resize
+		window.addEventListener('resize', this.handleResize.bind(this));
 	}
-
-	private update(rafTime = 0): void {
-		requestAnimationFrame(this.loop);
-
-		const frameStart = performance.now();
-		const deltaTime = (rafTime - this.time) / 1e3;
-		this.time = rafTime;
-
-		this.systemManager.updateSystems(deltaTime);
-
-		const frameTime = performance.now() - frameStart;
-		this.systemManager.getSystem(UISystem).updateFrameTime(frameTime);
+	
+	private handleResize(): void {
+		// Update canvas dimensions
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+		
+		// Update UI dimensions
+		// this.uiSystem.handleResize();
 	}
 }
 
-export default new App;
+export default new App();

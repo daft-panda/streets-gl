@@ -1,9 +1,9 @@
 import {atom, atomFamily, RecoilState} from "recoil";
 import {bidirectionalSyncEffect, StateStorage} from "~/app/ui/state/utils";
-import {SettingsObjectEntry} from "~/app/settings/SettingsObject";
-import {SettingsSchema} from "~/app/settings/SettingsSchema";
-import {OverpassEndpoint} from "~/app/systems/TileLoadingSystem";
 import RenderGraphSnapshot from "~/app/ui/RenderGraphSnapshot";
+import { SettingsObjectEntry } from "streets-gl-lib/dist/lib/src/core/settings/SettingsObject";
+import { SettingsSchema } from "streets-gl-lib/dist/lib/src/core/settings/SettingsSchema";
+import { OverpassEndpoint } from "streets-gl-lib/dist/lib/src/core/systems/TileLoadingSystem";
 
 export interface AtomsCollection {
 	activeFeature: RecoilState<{type: number; id: number}>;

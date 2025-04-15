@@ -1,9 +1,9 @@
 import React, {useContext} from "react";
-import {SettingsObjectEntry} from "~/app/settings/SettingsObject";
 import {AtomsContext} from "~/app/ui/UI";
 import {useRecoilValue} from "recoil";
 import SettingRange from "~/app/ui/components/SettingsModalPanel/SettingRange";
 import SettingSelect from "~/app/ui/components/SettingsModalPanel/SettingSelect";
+import { SettingsObjectEntry } from "streets-gl-lib/dist/lib/src/core/settings/SettingsObject";
 
 const SettingAuto: React.FC<{
 	id: string;

@@ -1,19 +1,20 @@
-import System from "../System";
-import MathUtils from "~/lib/math/MathUtils";
 import UI from "../ui/UI";
-import RenderSystem from "./RenderSystem";
-import * as RG from "~/lib/render-graph";
-import ControlsSystem from "./ControlsSystem";
 import {getAtoms} from "~/app/ui/state/atoms";
-import MapTimeSystem from "~/app/systems/MapTimeSystem";
-import PickingSystem from "~/app/systems/PickingSystem";
-import SettingsSystem from "~/app/systems/SettingsSystem";
-import SettingsStorageDecorator from "~/app/settings/SettingsStorageDecorator";
-import Utils from "~/app/Utils";
-import TileLoadingSystem, {OverpassEndpoint} from "~/app/systems/TileLoadingSystem";
 import UISystemState from "~/app/ui/UISystemState";
+import Pass, { InternalResourceType } from "streets-gl-lib/dist/lib/src/lib/render-graph/Pass"
 import RenderGraphSnapshot from "~/app/ui/RenderGraphSnapshot";
 import UIActions from "~/app/ui/UIActions";
+import System from "streets-gl-lib/dist/lib/src/core/System";
+import MapTimeSystem from "streets-gl-lib/dist/lib/src/core/systems/MapTimeSystem"
+import PickingSystem from "streets-gl-lib/dist/lib/src/core/systems/PickingSystem"
+import TileLoadingSystem, { OverpassEndpoint } from "streets-gl-lib/dist/lib/src/core/systems/TileLoadingSystem"
+import SettingsSystem from "streets-gl-lib/dist/lib/src/core/systems/SettingsSystem"
+import ControlsSystem from "streets-gl-lib/dist/lib/src/core/systems/ControlsSystem"
+import RenderSystem from "streets-gl-lib/dist/lib/src/core/systems/RenderSystem"
+import SettingsStorageDecorator from "../ui/SettingsStorageDecorator";
+import MathUtils from "streets-gl-lib/dist/lib/src/lib/math/MathUtils"
+import Utils from "streets-gl-lib/dist/lib/src/core/Utils"
+import Resource from "streets-gl-lib/dist/lib/src/lib/render-graph/Resource";
 
 const FPSUpdateInterval = 0.4;
 
@@ -83,6 +84,7 @@ export default class UISystem extends System {
 	private updateDOM(): void {
 		const settingsSystem = this.systemManager.getSystem(SettingsSystem);
 		const commonStorage = this.ui;
+		// @ts-expect-error
 		const settingsStorage = new SettingsStorageDecorator(settingsSystem.settings);
 
 		const atoms = getAtoms(commonStorage, settingsStorage);
@@ -162,16 +164,16 @@ export default class UISystem extends System {
 				let localResources: Record<string, string>[] = null;
 				let type: string = '';
 
-				if (node instanceof RG.Pass) {
+				if (node instanceof Pass) {
 					type = 'pass';
 					metadata.index = sourcePassList.indexOf(node).toString();
-					const localResourcesSet = node.getAllResourcesOfType(RG.InternalResourceType.Local);
+					const localResourcesSet = node.getAllResourcesOfType(InternalResourceType.Local);
 					localResources = Array.from(localResourcesSet).map(r => ({
 						name: r.name,
 						isTransient: r.isTransient.toString(),
 						isUsedExternally: r.isUsedExternally.toString()
 					}));
-				} else if (node instanceof RG.Resource) {
+				} else if (node instanceof Resource) {
 					type = 'resource';
 					metadata.isTransient = node.isTransient.toString();
 					metadata.isUsedExternally = node.isUsedExternally.toString();

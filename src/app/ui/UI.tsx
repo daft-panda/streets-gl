@@ -14,6 +14,9 @@ type Listeners = {
 export const AtomsContext = React.createContext<AtomsCollection>(null);
 export const ActionsContext = React.createContext<UIActions>(null);
 
+/**
+ * @internal
+ */
 export default class UI implements StateStorage {
 	private readonly state: UISystemState;
 	private readonly listeners: Listeners = {};

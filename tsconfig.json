@@ -6,7 +6,6 @@
 			"es2021",
 			"dom"
 		],
-		"allowJs": true,
 		"sourceMap": true,
 		"moduleResolution": "node",
 		"alwaysStrict": true,

@@ -4,12 +4,12 @@
 	"description": "OpenStreetMap 3D renderer",
 	"scripts": {
 		"start": "http-server ./build -p 8080",
+		"prebuild": "cd lib && bun run build:prod",
 		"build": "webpack --config ./webpack.config.js --mode=production",
 		"dev": "webpack serve --config ./webpack.config.js --mode=development",
 		"lint": "npx eslint src --no-fix --max-warnings 0",
 		"lint:fix": "npx eslint src --fix",
 		"typecheck": "tsc --noEmit -p ./tsconfig.json",
-		"declaration": "tsc --declaration --emitDeclarationOnly --stripInternal  --outDir ./dist -p ./tsconfig.lib.json",
 		"test": "jest"
 	},
 	"author": "StrandedKitty",
@@ -17,11 +17,6 @@
 		"type": "git",
 		"url": "https://github.com/StrandedKitty/streets-gl.git"
 	},
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"files": [
-	  "/dist"
-	],
 	"license": "MIT",
 	"devDependencies": {
 		"@types/d3": "^7.4.3",
@@ -82,19 +77,12 @@
 		"recoil": "^0.7.7",
 		"simplify-js": "^1.2.4",
 		"straight-skeleton": "^2.0.1",
+		"streets-gl-lib": "file:./lib",
 		"suncalc": "^1.9.0",
-		"url": "^0.11.4"
-	},
-	"peerDependencies": {
+		"url": "^0.11.4",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-icons": "^4.12.0",
 		"react-loading-skeleton": "^3.5.0"
-	},
-	"peerDependenciesMeta": {
-		"react": {"optional": true},
-		"react-dom": {"optional": true},
-		"react-icons": {"optional": true},
-		"react-loading-skeleton": {"optional": true}
 	}
 }

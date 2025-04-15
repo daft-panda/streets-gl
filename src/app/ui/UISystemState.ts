@@ -1,5 +1,6 @@
-import {SettingsSchema} from "~/app/settings/SettingsSchema";
-import {OverpassEndpoint} from "~/app/systems/TileLoadingSystem";
+
+import { SettingsSchema } from "streets-gl-lib/dist/lib/src/core/settings/SettingsSchema";
+import { OverpassEndpoint } from "streets-gl-lib/dist/lib/src/core/systems/TileLoadingSystem";
 import RenderGraphSnapshot from "~/app/ui/RenderGraphSnapshot";
 
 export default interface UISystemState {
