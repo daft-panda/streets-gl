@@ -365,16 +365,18 @@ export default class GBufferPass extends Pass<{
 			if (Config.IdentifiableFeatures) {
 				const ids = new Uint32Array(128*2);
 				let mappingCount = 0;
-				for (const mapping of tile.idVertexMapping) {
-					for (const highlightId of this.manager.systemManager.getHostInterface().parameters().highlightObjects.osmIds) {
+				
+				for (const highlightId of this.manager.systemManager.getHostInterface().parameters().highlightObjects.osmIds) {
+					for (const mapping of tile.idVertexMapping) {
 						if (mapping.id == highlightId) {
 							ids[mappingCount*2] = mapping.startVertexIdx;
 							ids[(mappingCount*2)+1] = mapping.vertexCount;
 							mappingCount++;
+							break;
 						}
 					}
 				}
-				
+
 				this.projectedMeshMaterial.getUniform<UniformUint2>('vertexMapping[0]', 'FeatureIdVertexMapping').value = ids;
 				this.projectedMeshMaterial.getUniform<UniformUint2>('vertexMappingCount', 'FeatureIdVertexMapping').value[0] = mappingCount;
 				this.projectedMeshMaterial.updateUniformBlock('FeatureIdVertexMapping');
