@@ -16,7 +16,8 @@
         "build": "rollup -c",
         "build:prod": "rollup -c --environment BUILD:production",
         "typecheck": "tsc --noEmit -p ./tsconfig.json",
-        "declaration": "tsc -p ./tsconfig.json --declaration --emitDeclarationOnly"
+        "declaration": "tsc -p ./tsconfig.json --declaration --emitDeclarationOnly",
+        "prepare": "bun run build"
     },
     "dependencies": {
         "@loaders.gl/core": "^3.4.15",
