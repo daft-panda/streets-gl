@@ -182,7 +182,8 @@ export default class MapTimeSystem extends System {
 	}
 
 	private updateTime(): void {
-		const newTime = this.systemManager.getHostInterface().parameters().mapTime;
+		const mapTime = this.systemManager.getHostInterface().parameters().mapTime;
+		const newTime = mapTime instanceof Date ? mapTime.getTime() : mapTime;
 		const diff = Math.abs(newTime - this.time);
 
 		if (diff > 1e6 && this.sunDirection && this.moonDirection && this.skyDirection) {

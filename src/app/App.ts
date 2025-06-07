@@ -49,6 +49,10 @@ class App {
 					},
 					mapTime: 0
 				};
+			},
+			startPosition: {
+				lat: 51.0538788,
+				lon: 3.7199623,
 			}
 		};
 		

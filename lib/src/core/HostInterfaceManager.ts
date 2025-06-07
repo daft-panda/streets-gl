@@ -16,11 +16,18 @@ import TileLoadingSystem from "./systems/TileLoadingSystem";
 import TileObjectsSystem from "./systems/TileObjectsSystem";
 import TileSystem from "./systems/TileSystem";
 import VehicleSystem from "./systems/VehicleSystem";
+import DrivingSystem from "./systems/DrivingSystem";
 
 export interface HostInterfaceParameters {
-  mapTime: number;
+  mapTime: Date | number;
   highlightObjects: {
     osmIds: number[];
+  };
+  drivingMode?: {
+    enabled: boolean;
+    targetOsmWayIds?: number[];
+    speed?: number; // meters per second
+    autoFollow?: boolean;
   };
 }
 
@@ -29,6 +36,7 @@ export interface HostInterface {
   systems: {
     vehicle?: boolean;
     picking?: boolean;
+    driving?: boolean;
   };
   eventHandlers: {
     fileLoadingProgressUpdate: (percentDone: number) => void;
@@ -38,6 +46,13 @@ export interface HostInterface {
   };
   parameterProvider: (deltaTime: number) => HostInterfaceParameters;
   baseUrl?: string;
+  startPosition?: {
+    lat: number;
+    lon: number;
+    pitch?: number;
+    yaw?: number;
+    distance?: number;
+  };
 }
 
 export interface MountedHostInterface {
@@ -50,6 +65,13 @@ export interface MountedHostInterface {
   };
   parameters: () => HostInterfaceParameters;
   baseUrl?: string;
+  startPosition?: {
+    lat: number;
+    lon: number;
+    pitch?: number;
+    yaw?: number;
+    distance?: number;
+  };
 }
 
 export interface HostInterfaceManagerInterface {
@@ -76,7 +98,7 @@ export default class HostInterfaceManager
   }
 
   public async init(hostInterface: HostInterface): Promise<void> {
-    this.hostParameterProvider = hostInterface.parameterProvider;
+    this.hostParameterProvider = hostInterface.parameterProvider ? hostInterface.parameterProvider : (deltaTime: number) => {return {} as HostInterfaceParameters;};
 
     this.hostInterface = {
       parameters: () => {
@@ -120,6 +142,10 @@ export default class HostInterfaceManager
 
     if (hostInterface.systems.vehicle) {
       this.systemManager.addSystems(VehicleSystem);
+    }
+
+    if (hostInterface.systems.driving) {
+      this.systemManager.addSystems(DrivingSystem);
     }
 
     this.update();

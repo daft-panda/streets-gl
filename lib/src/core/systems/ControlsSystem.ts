@@ -91,15 +91,26 @@ export default class ControlsSystem extends System {
 			this.state = newState;
 			this.updatePositionFromState(this.state);
 		} else {
-			const {lat, lon, pitch, yaw, distance} = Config.StartPosition;
-			const startPosition = MathUtils.degrees2meters(lat, lon);
+			// Use custom start position from host interface if provided, otherwise use default
+			const hostInterface = this.systemManager.getHostInterface();
+			const customStartPosition = hostInterface?.startPosition;
+			
+			const startConfig = customStartPosition ? {
+				lat: customStartPosition.lat,
+				lon: customStartPosition.lon,
+				pitch: customStartPosition.pitch ?? Config.StartPosition.pitch,
+				yaw: customStartPosition.yaw ?? Config.StartPosition.yaw,
+				distance: customStartPosition.distance ?? Config.StartPosition.distance
+			} : Config.StartPosition;
+
+			const startPosition = MathUtils.degrees2meters(startConfig.lat, startConfig.lon);
 
 			this.state = {
 				x: startPosition.x,
 				z: startPosition.y,
-				pitch: MathUtils.toRad(pitch),
-				yaw: MathUtils.toRad(yaw),
-				distance: distance
+				pitch: MathUtils.toRad(startConfig.pitch),
+				yaw: MathUtils.toRad(startConfig.yaw),
+				distance: startConfig.distance
 			}
 
 			this.updatePositionFromState(this.state);
