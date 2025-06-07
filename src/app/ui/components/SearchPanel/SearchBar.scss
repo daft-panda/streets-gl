@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .searchBar {
 	font-size: 16px;
@@ -29,12 +29,12 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.searchBar__input {
-		color: themed('text-color');
+		color: common.themed('text-color');
 
 		&::placeholder {
-			color: themed('text-color');
+			color: common.themed('text-color');
 		}
 	}
 }

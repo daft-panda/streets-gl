@@ -1,4 +1,4 @@
-@import "./../../styles/common.scss";
+@use "./../../styles/common.scss" as common;
 
 .controls {
 	width: 100%;
@@ -35,12 +35,12 @@
 	font-family: monospace;
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.keyboardKey {
-		border: 1px solid themed('keyboard-key-border-color');
-		box-shadow: 0 1px 0 1px themed('keyboard-key-shadow-color');
-		background-color: themed('keyboard-key-bg-color');
-		color: themed('keyboard-key-text-color');
+		border: 1px solid common.themed('keyboard-key-border-color');
+		box-shadow: 0 1px 0 1px common.themed('keyboard-key-shadow-color');
+		background-color: common.themed('keyboard-key-bg-color');
+		color: common.themed('keyboard-key-text-color');
 	}
 }
 

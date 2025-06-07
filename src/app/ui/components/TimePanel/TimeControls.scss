@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .controls {
 	&__modes {
@@ -50,10 +50,10 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.timeInput {
-		color: themed('text-color');
-		border-bottom: 1px solid themed('text-color');
+		color: common.themed('text-color');
+		border-bottom: 1px solid common.themed('text-color');
 	}
 }
 

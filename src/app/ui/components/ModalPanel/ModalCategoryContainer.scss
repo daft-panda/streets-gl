@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .categoryContainer {
 	padding: 12px;
@@ -11,8 +11,8 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.categoryContainer {
-		background: themed('category-bg');
+		background: common.themed('category-bg');
 	}
 }

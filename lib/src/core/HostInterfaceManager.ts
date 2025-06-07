@@ -1,7 +1,7 @@
 import System from "./System";
 import SystemManager, { AbstractSystemType } from "./SystemManager";
 import ResourceLoader, { ResourceJSON } from "./world/ResourceLoader";
-import resourcesList from "../../../resources/resources.json";
+import resourcesList from "../../resources/resources.json";
 import ControlsSystem from "./systems/ControlsSystem";
 import CursorStyleSystem from "./systems/CursorStyleSystem";
 import MapTimeSystem from "./systems/MapTimeSystem";

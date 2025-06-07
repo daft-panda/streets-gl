@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .searchList {
 	font-size: 16px;
@@ -28,9 +28,9 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.searchList__item {
-		border-bottom: 1px solid themed('panel-border-color');
+		border-bottom: 1px solid common.themed('panel-border-color');
 
 		&:last-child {
 			border-bottom: none;

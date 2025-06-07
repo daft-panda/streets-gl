@@ -1,4 +1,4 @@
-@import "./../../styles/common.scss";
+@use "./../../styles/common.scss" as common;
 
 .container {
 	display: flex;
@@ -51,19 +51,19 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.container {
-		background: themed('modal-category-item-bg');
+		background: common.themed('modal-category-item-bg');
 
 		&__controls {
 			&__button {
-				border: 1px solid themed('modal-button-border-color');
-				color: themed('modal-button-text-color');
-				background-color: themed('modal-button-bg');
-				box-shadow: 0 1px 2px 0 themed('modal-button-shadow-color');
+				border: 1px solid common.themed('modal-button-border-color');
+				color: common.themed('modal-button-text-color');
+				background-color: common.themed('modal-button-bg');
+				box-shadow: 0 1px 2px 0 common.themed('modal-button-shadow-color');
 
 				&:hover {
-					background-color: themed('modal-button-bg-hover');
+					background-color: common.themed('modal-button-bg-hover');
 				}
 			}
 		}

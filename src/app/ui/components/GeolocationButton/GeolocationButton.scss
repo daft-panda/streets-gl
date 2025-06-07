@@ -1,4 +1,4 @@
-@import "./../../styles/common.scss";
+@use "./../../styles/common.scss" as common;
 
 .geolocationButton {
 	position: absolute;
@@ -25,9 +25,9 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.geolocationButton {
-		color: themed('text-color');
+		color: common.themed('text-color');
 	}
 }
 

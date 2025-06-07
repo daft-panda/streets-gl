@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .search {
 	position: absolute;
@@ -7,8 +7,8 @@
 	width: 350px;
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.search {
-		color: themed('text-color');
+		color: common.themed('text-color');
 	}
 }

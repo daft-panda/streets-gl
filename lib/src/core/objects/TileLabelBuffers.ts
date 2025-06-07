@@ -1,4 +1,4 @@
-import FontJSON from "../../../../resources/Inter-Regular.json";
+import FontJSON from "../../../resources/Inter-Regular.json";
 import Vec3 from "~/lib/math/Vec3";
 import {LayoutGenerator} from "~/lib/bmfont";
 

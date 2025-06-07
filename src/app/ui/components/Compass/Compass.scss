@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 $northColor: #de1616;
 $southColor: #d7d7d7;
@@ -37,14 +37,14 @@ $southColor: #d7d7d7;
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.compass {
 		&:hover .compass__container {
 			filter:
-				drop-shadow( 1px  0px 0px themed('compass-outline-color'))
-				drop-shadow(-1px  0px 0px themed('compass-outline-color'))
-				drop-shadow( 0px  1px 0px themed('compass-outline-color'))
-				drop-shadow( 0px -1px 0px themed('compass-outline-color'));
+				drop-shadow( 1px  0px 0px common.themed('compass-outline-color'))
+				drop-shadow(-1px  0px 0px common.themed('compass-outline-color'))
+				drop-shadow( 0px  1px 0px common.themed('compass-outline-color'))
+				drop-shadow( 0px -1px 0px common.themed('compass-outline-color'));
 		}
 	}
 }

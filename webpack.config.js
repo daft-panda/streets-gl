@@ -43,10 +43,10 @@ module.exports = (env, argv) => ([{
 		new MiniCssExtractPlugin(),
 		new CopyPlugin({
 			patterns: [
-				{from: './resources/textures', to: path.resolve(__dirname, 'build/textures')},
-				{from: './resources/models', to: path.resolve(__dirname, 'build/models')},
-				{from: './resources/images', to: path.resolve(__dirname, 'build/images')},
-				{from: './resources/misc', to: path.resolve(__dirname, 'build/misc')}
+				{from: './lib/resources/textures', to: path.resolve(__dirname, 'build/textures')},
+				{from: './lib/resources/models', to: path.resolve(__dirname, 'build/models')},
+				{from: './lib/resources/images', to: path.resolve(__dirname, 'build/images')},
+				{from: './lib/resources/misc', to: path.resolve(__dirname, 'build/misc')}
 			]
 		}),
 		new ESLintPlugin({

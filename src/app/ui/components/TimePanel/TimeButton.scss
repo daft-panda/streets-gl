@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .timeButton {
 	display: block;
@@ -28,17 +28,17 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.timeButton {
-		color: themed('text-color');
+		color: common.themed('text-color');
 	}
 
 	.timeButton--text {
-		border: 1px solid themed('text-color');
+		border: 1px solid common.themed('text-color');
 	}
 
 	.timeButton--active {
-		background: themed('text-color');
-		color: themed('text-color-opposite');
+		background: common.themed('text-color');
+		color: common.themed('text-color-opposite');
 	}
 }

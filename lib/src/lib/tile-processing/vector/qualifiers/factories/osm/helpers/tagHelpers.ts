@@ -1,5 +1,5 @@
 import Utils from "~/core/Utils";
-import ColorsList from "../../../../../../../../../resources/colors.json";
+import ColorsList from "../../../../../../../../resources/colors.json";
 
 export function isTagIncludesString(
 	tags: Record<string, string>,

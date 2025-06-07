@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .settingsRow {
 	display: flex;
@@ -57,7 +57,7 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.selectButtons {
 		display: flex;
 		flex-direction: row;
@@ -67,9 +67,9 @@
 			font-size: 12px;
 			font-weight: 600;
 			padding: 4px 8px;
-			color: themed('text-color');
-			background: themed('text-color-opposite');
-			border: 1px solid themed('button-border');
+			color: common.themed('text-color');
+			background: common.themed('text-color-opposite');
+			border: 1px solid common.themed('button-border');
 			border-right: none;
 
 			&:first-child {
@@ -78,13 +78,13 @@
 
 			&:last-child {
 				border-radius: 0 99px 99px 0;
-				border-right: 1px solid themed('button-border');
+				border-right: 1px solid common.themed('button-border');
 			}
 
 			&--disabled {
-				color: themed('text-color-opposite');
-				background: themed('text-color');
-				border: 1px solid themed('text-color');
+				color: common.themed('text-color-opposite');
+				background: common.themed('text-color');
+				border: 1px solid common.themed('text-color');
 			}
 		}
 	}

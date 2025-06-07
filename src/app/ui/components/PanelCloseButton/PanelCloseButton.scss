@@ -1,4 +1,4 @@
-@import "./../../styles/common.scss";
+@use "./../../styles/common.scss" as common;
 
 .button {
 	display: block;
@@ -14,14 +14,14 @@
 	transition: background-color 200ms;
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.button {
-		color: themed('panel-close-button-text-color');
-		background: themed('panel-close-button-bg');
-		box-shadow: 0 1px 2px 0 themed('modal-button-shadow-color');
+		color: common.themed('panel-close-button-text-color');
+		background: common.themed('panel-close-button-bg');
+		box-shadow: 0 1px 2px 0 common.themed('modal-button-shadow-color');
 
 		&:hover {
-			background: themed('panel-close-button-bg-hover');
+			background: common.themed('panel-close-button-bg-hover');
 		}
 	}
 }

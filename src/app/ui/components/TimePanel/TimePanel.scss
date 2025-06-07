@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .timePanel {
 	position: absolute;
@@ -25,8 +25,8 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.timePanel {
-		color: themed('text-color');
+		color: common.themed('text-color');
 	}
 }

@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@use "../../styles/common.scss" as common;
 
 .selectionInfoPanel {
 	pointer-events: none;
@@ -56,9 +56,9 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.selectionInfo {
-		color: themed('text-color');
+		color: common.themed('text-color');
 	}
 }
 
@@ -74,10 +74,10 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.links {
 		&__button {
-			background-color: themed('button-bg');
+			background-color: common.themed('button-bg');
 
 			&:hover {
 
@@ -121,14 +121,14 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.tags {
 		&__table {
-			background: themed('bg-primary');
+			background: common.themed('bg-primary');
 		}
 
 		td {
-			border: 1px solid themed('text-color');
+			border: 1px solid common.themed('text-color');
 		}
 	}
 }
@@ -156,8 +156,8 @@
 	}
 }
 
-@include themify($themes) {
+@include common.themify(common.$themes) {
 	.imageIcon {
-		background-color: themed('modal-button-text-color');
+		background-color: common.themed('modal-button-text-color');
 	}
 }
