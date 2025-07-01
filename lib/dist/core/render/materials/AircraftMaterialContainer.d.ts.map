@@ -1,0 +1,1 @@
+{"version":3,"file":"AircraftMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/AircraftMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,MAAM,CAAC,OAAO,OAAO,yBAA0B,SAAQ,iBAAiB;gBACpD,QAAQ,EAAE,gBAAgB;CA8D7C"}

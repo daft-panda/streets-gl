@@ -1,0 +1,1 @@
+{"version":3,"file":"getDefaultLevelsFromRoofType.d.ts","sourceRoot":"","sources":["../../../../../../../../src/lib/tile-processing/vector/qualifiers/factories/osm/helpers/getDefaultLevelsFromRoofType.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,oBAAoB,EAAC,MAAM,qDAAqD,CAAC;AAiBzF,MAAM,CAAC,OAAO,UAAU,4BAA4B,CAAC,IAAI,EAAE,oBAAoB,CAAC,kBAAkB,CAAC,GAAG,MAAM,CAE3G"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"MaterialContainer.js","sources":["../../../../../src/core/render/materials/MaterialContainer.ts"],"sourcesContent":[null],"names":["MaterialContainer","renderer","material","constructor","this"],"mappings":"AAGc,MAAgBA,EACnBC,SACHC,SAEP,WAAAC,CAAsBF,GACrBG,KAAKH,SAAWA"}

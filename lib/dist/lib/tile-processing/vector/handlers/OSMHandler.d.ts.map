@@ -1,0 +1,1 @@
+{"version":3,"file":"OSMHandler.d.ts","sourceRoot":"","sources":["../../../../../src/lib/tile-processing/vector/handlers/OSMHandler.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,aAAa,EAAC,MAAM,qDAAqD,CAAC;AAElF,MAAM,CAAC,OAAO,WAAW,UAAU;IAClC,WAAW,IAAI,aAAa,EAAE,CAAC;IAC/B,oBAAoB,IAAI,aAAa,CAAC;IACtC,oBAAoB,IAAI,IAAI,CAAC;IAC7B,4BAA4B,IAAI,IAAI,CAAC;CACrC"}

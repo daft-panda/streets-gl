@@ -1,0 +1,1 @@
+{"version":3,"file":"AbstractInstancedMesh.d.ts","sourceRoot":"","sources":["../../../../src/lib/renderer/abstract-renderer/AbstractInstancedMesh.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,kBAAkB,EAAC,MAAM,+CAA+C,CAAC;AAEjF,MAAM,WAAW,2BAA4B,SAAQ,kBAAkB;IACtE,OAAO,EAAE,OAAO,CAAC;CACjB;AAED,MAAM,CAAC,OAAO,WAAW,qBAAqB;IAC7C,OAAO,EAAE,OAAO,CAAC;CACjB"}

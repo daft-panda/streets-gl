@@ -1,0 +1,1 @@
+{"version":3,"file":"SegmentGroup.d.ts","sourceRoot":"","sources":["../../../src/lib/road-graph/SegmentGroup.ts"],"names":[],"mappings":"AAAA,OAAO,IAAI,MAAM,iBAAiB,CAAC;AA0BnC,MAAM,CAAC,OAAO,OAAO,YAAY;IAChC,OAAO,CAAC,QAAQ,CAAC,QAAQ,CAAiB;IAEnC,uBAAuB,CAAC,QAAQ,EAAE,IAAI,EAAE,GAAG,IAAI;IAM/C,oBAAoB,CAAC,KAAK,EAAE,IAAI,GAAG,IAAI;CAgB9C"}

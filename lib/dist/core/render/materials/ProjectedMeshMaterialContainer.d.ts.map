@@ -1,0 +1,1 @@
+{"version":3,"file":"ProjectedMeshMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/ProjectedMeshMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAGpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAIjF,MAAM,CAAC,OAAO,OAAO,8BAA+B,SAAQ,iBAAiB;gBACzD,QAAQ,EAAE,gBAAgB,EAAE,UAAU,EAAE,OAAO;CAuKlE"}

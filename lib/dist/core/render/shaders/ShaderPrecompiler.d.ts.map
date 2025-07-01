@@ -1,0 +1,1 @@
+{"version":3,"file":"ShaderPrecompiler.d.ts","sourceRoot":"","sources":["../../../../src/core/render/shaders/ShaderPrecompiler.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,OAAO,iBAAiB;WACvB,qBAAqB,CAAC,YAAY,EAAE,MAAM,EAAE,IAAI,EAAE,MAAM,EAAE,OAAO,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,GAAG,MAAM;CAoBhH"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"TerrainUsageMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/TerrainUsageMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,MAAM,CAAC,OAAO,OAAO,6BAA8B,SAAQ,iBAAiB;gBACxD,QAAQ,EAAE,gBAAgB;CAmC7C"}

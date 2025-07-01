@@ -1,0 +1,1 @@
+{"version":3,"file":"splitPolygon.d.ts","sourceRoot":"","sources":["../../../../../../src/lib/tile-processing/tile3d/builders/roofs/splitPolygon.ts"],"names":[],"mappings":"AAAA,KAAK,MAAM,GAAG,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;AAC/B,KAAK,OAAO,GAAG,MAAM,EAAE,CAAC;AAExB,MAAM,CAAC,OAAO,UAAU,YAAY,CAAC,IAAI,EAAE,OAAO,EAAE,OAAO,EAAE,MAAM,EAAE,MAAM,EAAE,MAAM,GAAG,OAAO,EAAE,CA0G9F"}

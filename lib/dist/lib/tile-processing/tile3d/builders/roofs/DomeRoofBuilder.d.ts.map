@@ -1,0 +1,1 @@
+{"version":3,"file":"DomeRoofBuilder.d.ts","sourceRoot":"","sources":["../../../../../../src/lib/tile-processing/tile3d/builders/roofs/DomeRoofBuilder.ts"],"names":[],"mappings":"AAAA,OAAO,iBAAiB,MAAM,+DAA+D,CAAC;AAC9F,OAAO,IAAI,MAAM,iBAAiB,CAAC;AAEnC,MAAM,CAAC,OAAO,OAAO,eAAgB,SAAQ,iBAAiB;IAC7D,UAAmB,MAAM,EAAE,IAAI,EAAE,CAW/B;IACF,SAAS,CAAC,MAAM,UAAS;CACzB"}

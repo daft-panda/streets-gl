@@ -1,0 +1,1 @@
+{"version":3,"file":"TerrainHeightDownscaleMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/TerrainHeightDownscaleMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,MAAM,CAAC,OAAO,OAAO,uCAAwC,SAAQ,iBAAiB;gBAClE,QAAQ,EAAE,gBAAgB;CAwC7C"}

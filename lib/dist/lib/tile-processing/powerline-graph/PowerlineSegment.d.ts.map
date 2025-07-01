@@ -1,0 +1,1 @@
+{"version":3,"file":"PowerlineSegment.d.ts","sourceRoot":"","sources":["../../../../src/lib/tile-processing/powerline-graph/PowerlineSegment.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,qDAAqD,CAAC;AAEhF,MAAM,CAAC,OAAO,OAAO,gBAAgB;IACpC,SAAgB,KAAK,EAAE,aAAa,CAAC;IACrC,SAAgB,GAAG,EAAE,aAAa,CAAC;gBAEhB,KAAK,EAAE,aAAa,EAAE,GAAG,EAAE,aAAa;CAI3D"}

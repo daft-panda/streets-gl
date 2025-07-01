@@ -1,0 +1,1 @@
+{"version":3,"file":"getTreeTypeFromTags.d.ts","sourceRoot":"","sources":["../../../../../../../../src/lib/tile-processing/vector/qualifiers/factories/osm/helpers/getTreeTypeFromTags.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,oBAAoB,EAAC,MAAM,qDAAqD,CAAC;AASzF,MAAM,CAAC,OAAO,UAAU,mBAAmB,CAAC,IAAI,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,GAAG,oBAAoB,CAAC,UAAU,CAAC,CAgB1G"}

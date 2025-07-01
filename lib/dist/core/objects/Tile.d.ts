@@ -1,0 +1,66 @@
+import Object3D from "~/lib/core/Object3D";
+import Camera from "~/lib/core/Camera";
+import Vec2 from "~/lib/math/Vec2";
+import TileExtrudedMesh from "./TileExtrudedMesh";
+import TileProjectedMesh from "./TileProjectedMesh";
+import TileLabelBuffers from "./TileLabelBuffers";
+import TileData, { FeatureIdVertexMapping } from "~/lib/tile-processing/tile3d/buffers/Tile3DBuffers";
+import AABB3D from "~/lib/math/AABB3D";
+import { Tile3DInstanceType } from "~/lib/tile-processing/tile3d/features/Tile3DInstance";
+import InstancedObject from "./InstancedObject";
+import TerrainMask from "./TerrainMask";
+import TileHuggingMesh from "./TileHuggingMesh";
+import EventEmitter from "../EventEmitter";
+export type InstanceBufferInterleaved = Float32Array;
+export type TileInstanceBuffers = Map<Tile3DInstanceType, {
+    rawLOD0: InstanceBufferInterleaved;
+    rawLOD1: InstanceBufferInterleaved;
+    transformedLOD0: InstanceBufferInterleaved;
+    transformedLOD1: InstanceBufferInterleaved;
+    transformOriginLOD0: Vec2;
+    transformOriginLOD1: Vec2;
+    boundingBoxLOD0: AABB3D;
+    boundingBoxLOD1: AABB3D;
+}>;
+export default class Tile extends Object3D {
+    private static counter;
+    readonly x: number;
+    readonly y: number;
+    readonly localId: number;
+    readonly emitter: EventEmitter<{
+        delete: () => void;
+    }>;
+    readonly buildingLocalToPackedMap: Map<number, number>;
+    readonly buildingPackedToLocalMap: Map<number, number>;
+    readonly buildingOffsetMap: Map<number, [number, number]>;
+    readonly buildingVisibilityMap: Map<number, boolean>;
+    inFrustum: boolean;
+    distanceToCamera: number;
+    disposed: boolean;
+    readonly labelBuffersList: TileLabelBuffers[];
+    labelsAABB: AABB3D;
+    readonly instanceBuffers: TileInstanceBuffers;
+    idVertexMapping: FeatureIdVertexMapping[];
+    extrudedMesh: TileExtrudedMesh;
+    projectedMesh: TileProjectedMesh;
+    huggingMesh: TileHuggingMesh;
+    terrainMaskMesh: TerrainMask;
+    readonly usedHeightTiles: Vec2[];
+    terrainMaskSliceIndex: number;
+    constructor(x: number, y: number);
+    private updatePosition;
+    load(data: TileData): void;
+    updateInstancesBoundingBoxes(instancedObjects: Map<string, InstancedObject>): void;
+    getInstancesBoundingBox(instanceName: Tile3DInstanceType, lod: number): AABB3D;
+    getInstanceBufferWithTransform(instanceName: Tile3DInstanceType, lod: number, origin: Vec2): InstanceBufferInterleaved;
+    private updateLabelBufferList;
+    updateDistanceToCamera(camera: Camera): void;
+    private updateExtrudedGeometryOffsets;
+    hideBuilding(id: number): void;
+    showBuilding(id: number): void;
+    isBuildingVisible(id: number): boolean;
+    dispose(): void;
+    static packFeatureId(id: number, type: number): number;
+    static unpackFeatureId(packedId: number): [number, number];
+}
+//# sourceMappingURL=Tile.d.ts.map

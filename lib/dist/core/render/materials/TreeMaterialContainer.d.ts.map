@@ -1,0 +1,1 @@
+{"version":3,"file":"TreeMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/TreeMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,qBAAsB,SAAQ,iBAAiB;gBAChD,QAAQ,EAAE,gBAAgB;CAwE7C"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"getRoofOrientationFromOSMOrientation.d.ts","sourceRoot":"","sources":["../../../../../../../../src/lib/tile-processing/vector/qualifiers/factories/osm/helpers/getRoofOrientationFromOSMOrientation.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,oBAAoB,EAAC,MAAM,qDAAqD,CAAC;AAEzF,MAAM,CAAC,OAAO,UAAU,oCAAoC,CAAC,GAAG,EAAE,MAAM,GAAG,oBAAoB,CAAC,yBAAyB,CAAC,CAMzH"}

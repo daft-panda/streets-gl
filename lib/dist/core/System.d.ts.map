@@ -1,0 +1,1 @@
+{"version":3,"file":"System.d.ts","sourceRoot":"","sources":["../../src/core/System.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,iBAAiB,CAAC;AAE5C,MAAM,CAAC,OAAO,CAAC,QAAQ,OAAO,MAAM;IAC5B,aAAa,EAAE,aAAa,CAAC;aAEpB,QAAQ,IAAI,IAAI;aAEhB,MAAM,CAAC,SAAS,EAAE,MAAM,GAAG,IAAI;CAC/C"}

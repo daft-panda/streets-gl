@@ -1,0 +1,1 @@
+{"version":3,"file":"MapWorkerSystem.d.ts","sourceRoot":"","sources":["../../../src/core/systems/MapWorkerSystem.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,2BAA2B,CAAC;AAClD,OAAO,MAAM,MAAM,WAAW,CAAC;AAI/B,MAAM,CAAC,OAAO,OAAO,eAAgB,SAAQ,MAAM;IAClD,OAAO,CAAC,OAAO,CAAmB;IAE3B,QAAQ,IAAI,IAAI;IA4BhB,aAAa,IAAI,SAAS;IAY1B,MAAM,CAAC,SAAS,EAAE,MAAM,GAAG,IAAI;CAGtC"}

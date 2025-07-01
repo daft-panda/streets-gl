@@ -1,0 +1,1 @@
+{"version":3,"file":"AtmosphereMultipleScatteringMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/AtmosphereMultipleScatteringMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,6CAA8C,SAAQ,iBAAiB;gBACxE,QAAQ,EAAE,gBAAgB;CAqC7C"}

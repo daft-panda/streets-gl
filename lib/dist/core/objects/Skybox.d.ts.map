@@ -1,0 +1,1 @@
+{"version":3,"file":"Skybox.d.ts","sourceRoot":"","sources":["../../../src/core/objects/Skybox.ts"],"names":[],"mappings":"AAAA,OAAO,YAAY,MAAM,+CAA+C,CAAC;AACzE,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,OAAO,kBAAkB,MAAM,sBAAsB,CAAC;AAyCtD,MAAM,CAAC,OAAO,OAAO,MAAO,SAAQ,kBAAkB;IAC9C,IAAI,EAAE,YAAY,CAAQ;;IAQ1B,WAAW,IAAI,OAAO;IAItB,UAAU,CAAC,QAAQ,EAAE,gBAAgB,GAAG,IAAI;CAgBnD"}

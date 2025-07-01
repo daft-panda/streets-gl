@@ -1,0 +1,1 @@
+{"version":3,"file":"ProjectedMeshDepthMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/ProjectedMeshDepthMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAGpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,mCAAoC,SAAQ,iBAAiB;gBAC9D,QAAQ,EAAE,gBAAgB;CAsE7C"}

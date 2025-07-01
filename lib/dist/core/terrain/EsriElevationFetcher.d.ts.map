@@ -1,0 +1,1 @@
+{"version":3,"file":"EsriElevationFetcher.d.ts","sourceRoot":"","sources":["../../../src/core/terrain/EsriElevationFetcher.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,OAAO,OAAO,oBAAoB;IACxC,OAAO,CAAC,MAAM,CAAC,UAAU,CAAkB;WAEvB,KAAK,CAAC,CAAC,EAAE,MAAM,EAAE,CAAC,EAAE,MAAM,EAAE,IAAI,EAAE,MAAM,GAAG,OAAO,CAAC,YAAY,CAAC;mBA4C/D,mBAAmB;IAaxC,OAAO,CAAC,MAAM,CAAC,iBAAiB;CAShC"}

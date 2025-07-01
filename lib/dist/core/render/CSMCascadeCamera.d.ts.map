@@ -1,0 +1,1 @@
+{"version":3,"file":"CSMCascadeCamera.d.ts","sourceRoot":"","sources":["../../../src/core/render/CSMCascadeCamera.ts"],"names":[],"mappings":"AAAA,OAAO,kBAAkB,MAAM,+BAA+B,CAAC;AAE/D,MAAM,CAAC,OAAO,OAAO,gBAAiB,SAAQ,kBAAkB;gBAC5C,EAClB,IAAI,EACJ,IAAI,EACJ,GAAG,EACH,EAAE;QACF,IAAI,EAAE,MAAM,CAAC;QACb,IAAI,EAAE,MAAM,CAAC;QACb,GAAG,EAAE,MAAM,CAAC;KACZ;CAUD"}

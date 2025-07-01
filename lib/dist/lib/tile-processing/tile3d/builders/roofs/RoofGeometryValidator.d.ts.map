@@ -1,0 +1,1 @@
+{"version":3,"file":"RoofGeometryValidator.d.ts","sourceRoot":"","sources":["../../../../../../src/lib/tile-processing/tile3d/builders/roofs/RoofGeometryValidator.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,YAAY,EAAC,MAAM,yDAAyD,CAAC;AACrF,OAAO,kBAAkB,MAAM,0DAA0D,CAAC;AAG1F,MAAM,CAAC,OAAO,OAAO,qBAAqB;WAC3B,QAAQ,CAAC,IAAI,EAAE,YAAY,EAAE,YAAY,EAAE,kBAAkB,GAAG,OAAO;CAoBrF"}

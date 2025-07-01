@@ -1,0 +1,1 @@
+{"version":3,"file":"Tile3DLabel.d.ts","sourceRoot":"","sources":["../../../../../src/lib/tile-processing/tile3d/features/Tile3DLabel.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,qDAAqD,CAAC;AAEhF,MAAM,CAAC,OAAO,WAAW,WAAY,SAAQ,aAAa;IACzD,IAAI,EAAE,OAAO,CAAC;IACd,QAAQ,EAAE,CAAC,MAAM,EAAE,MAAM,EAAE,MAAM,CAAC,CAAC;IACnC,QAAQ,EAAE,MAAM,CAAC;IACjB,IAAI,EAAE,MAAM,CAAC;CACb"}

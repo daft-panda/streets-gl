@@ -1,0 +1,1 @@
+{"version":3,"file":"Tile3DTerrainMaskGeometry.d.ts","sourceRoot":"","sources":["../../../../../src/lib/tile-processing/tile3d/features/Tile3DTerrainMaskGeometry.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,qDAAqD,CAAC;AAEhF,MAAM,CAAC,OAAO,WAAW,yBAA0B,SAAQ,aAAa;IACvE,IAAI,EAAE,MAAM,CAAC;IACb,cAAc,EAAE,YAAY,CAAC;CAC7B"}

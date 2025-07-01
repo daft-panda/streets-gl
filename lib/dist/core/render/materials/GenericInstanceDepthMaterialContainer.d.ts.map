@@ -1,0 +1,1 @@
+{"version":3,"file":"GenericInstanceDepthMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/GenericInstanceDepthMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,MAAM,CAAC,OAAO,OAAO,qCAAsC,SAAQ,iBAAiB;gBAChE,QAAQ,EAAE,gBAAgB;CAoD7C"}

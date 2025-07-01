@@ -1,0 +1,1 @@
+{"version":3,"file":"MaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/MaterialContainer.ts"],"names":[],"mappings":"AAAA,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AACjF,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,MAAM,CAAC,OAAO,CAAC,QAAQ,OAAO,iBAAiB;IAC9C,SAAS,CAAC,QAAQ,EAAE,gBAAgB,CAAC;IAC9B,QAAQ,EAAE,gBAAgB,CAAC;IAElC,SAAS,aAAa,QAAQ,EAAE,gBAAgB;CAGhD"}

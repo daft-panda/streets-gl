@@ -1,0 +1,1 @@
+{"version":3,"file":"PyramidalRoofBuilder.d.ts","sourceRoot":"","sources":["../../../../../../src/lib/tile-processing/tile3d/builders/roofs/PyramidalRoofBuilder.ts"],"names":[],"mappings":"AAAA,OAAO,iBAAiB,MAAM,+DAA+D,CAAC;AAC9F,OAAO,IAAI,MAAM,iBAAiB,CAAC;AAEnC,MAAM,CAAC,OAAO,OAAO,oBAAqB,SAAQ,iBAAiB;IAClE,SAAS,CAAC,MAAM,EAAE,IAAI,EAAE,CAGtB;IACF,SAAS,CAAC,MAAM,UAAQ;CACxB"}

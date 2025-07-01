@@ -1,0 +1,1 @@
+{"version":3,"file":"FlatRoofBuilder.d.ts","sourceRoot":"","sources":["../../../../../../src/lib/tile-processing/tile3d/builders/roofs/FlatRoofBuilder.ts"],"names":[],"mappings":"AAAA,OAAO,WAAW,EAAE,EAAC,YAAY,EAAE,UAAU,EAAC,MAAM,eAAe,CAAC;AAGpE,MAAM,CAAC,OAAO,OAAO,eAAgB,YAAW,WAAW;IACnD,KAAK,CAAC,MAAM,EAAE,UAAU,GAAG,YAAY;CAkC9C"}

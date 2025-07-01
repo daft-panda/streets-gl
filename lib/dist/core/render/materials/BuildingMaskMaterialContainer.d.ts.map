@@ -1,0 +1,1 @@
+{"version":3,"file":"BuildingMaskMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/BuildingMaskMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AACpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,6BAA8B,SAAQ,iBAAiB;gBACxD,QAAQ,EAAE,gBAAgB;CA+C7C"}

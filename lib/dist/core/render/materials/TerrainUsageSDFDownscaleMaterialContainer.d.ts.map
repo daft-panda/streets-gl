@@ -1,0 +1,1 @@
+{"version":3,"file":"TerrainUsageSDFDownscaleMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/TerrainUsageSDFDownscaleMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAEjF,MAAM,CAAC,OAAO,OAAO,yCAA0C,SAAQ,iBAAiB;gBACpE,QAAQ,EAAE,gBAAgB,EAAE,WAAW,EAAE,OAAO;CAmCnE"}

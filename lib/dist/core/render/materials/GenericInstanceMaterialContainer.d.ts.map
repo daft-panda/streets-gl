@@ -1,0 +1,1 @@
+{"version":3,"file":"GenericInstanceMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/GenericInstanceMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,gCAAiC,SAAQ,iBAAiB;gBAC3D,QAAQ,EAAE,gBAAgB;CA8D7C"}

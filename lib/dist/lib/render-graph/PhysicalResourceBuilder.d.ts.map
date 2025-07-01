@@ -1,0 +1,1 @@
+{"version":3,"file":"PhysicalResourceBuilder.d.ts","sourceRoot":"","sources":["../../../src/lib/render-graph/PhysicalResourceBuilder.ts"],"names":[],"mappings":"AAAA,OAAO,kBAAkB,MAAM,sBAAsB,CAAC;AACtD,OAAO,gBAAgB,MAAM,oBAAoB,CAAC;AAElD,MAAM,CAAC,OAAO,CAAC,QAAQ,OAAO,uBAAuB,CAAC,CAAC,SAAS,gBAAgB;IAC/E,SAAgB,IAAI,EAAE,CAAC,CAAC;aACR,4BAA4B,CAAC,UAAU,EAAE,kBAAkB,GAAG,CAAC;CAC/E"}

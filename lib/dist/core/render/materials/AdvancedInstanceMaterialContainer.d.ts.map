@@ -1,0 +1,1 @@
+{"version":3,"file":"AdvancedInstanceMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/AdvancedInstanceMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,iCAAkC,SAAQ,iBAAiB;gBAC5D,QAAQ,EAAE,gBAAgB;CA8D7C"}

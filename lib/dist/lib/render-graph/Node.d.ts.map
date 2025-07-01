@@ -1,0 +1,1 @@
+{"version":3,"file":"Node.d.ts","sourceRoot":"","sources":["../../../src/lib/render-graph/Node.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,CAAC,QAAQ,OAAO,IAAI;IAC1B,IAAI,EAAE,MAAM,CAAC;IACpB,SAAgB,YAAY,EAAE,OAAO,CAAC;IAEtC,SAAS,aAAa,IAAI,EAAE,MAAM;CAGlC"}

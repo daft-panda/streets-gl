@@ -1,0 +1,1 @@
+{"version":3,"file":"VectorFeatureBase.d.ts","sourceRoot":"","sources":["../../../../../src/lib/tile-processing/vector/features/VectorFeatureBase.ts"],"names":[],"mappings":"AAAA,OAAO,YAAY,MAAM,gBAAgB,CAAC;AAE1C,MAAM,CAAC,OAAO,WAAW,iBAAiB;IACzC,IAAI,EAAE,MAAM,CAAC;IACb,YAAY,EAAE,YAAY,CAAC;CAC3B"}

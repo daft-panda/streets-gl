@@ -1,0 +1,1 @@
+{"version":3,"file":"getWaterwayParamsFromTags.d.ts","sourceRoot":"","sources":["../../../../../../../../src/lib/tile-processing/vector/qualifiers/factories/osm/helpers/getWaterwayParamsFromTags.ts"],"names":[],"mappings":"AAUA,MAAM,CAAC,OAAO,UAAU,yBAAyB,CAAC,IAAI,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,GAAG;IAChF,KAAK,EAAE,MAAM,CAAC;CACd,CAUA"}

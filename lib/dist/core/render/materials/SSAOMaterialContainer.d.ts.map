@@ -1,0 +1,1 @@
+{"version":3,"file":"SSAOMaterialContainer.d.ts","sourceRoot":"","sources":["../../../../src/core/render/materials/SSAOMaterialContainer.ts"],"names":[],"mappings":"AACA,OAAO,iBAAiB,MAAM,qBAAqB,CAAC;AAEpD,OAAO,gBAAgB,MAAM,mDAAmD,CAAC;AAGjF,MAAM,CAAC,OAAO,OAAO,qBAAsB,SAAQ,iBAAiB;gBAChD,QAAQ,EAAE,gBAAgB;CA0E7C"}

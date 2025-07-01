@@ -1,0 +1,1 @@
+{"version":3,"file":"getWaterwayParams.d.ts","sourceRoot":"","sources":["../../../../../../../../src/lib/tile-processing/vector/qualifiers/factories/vector-tile/helpers/getWaterwayParams.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,UAAU,EAAC,MAAM,uDAAuD,CAAC;AAUjF,MAAM,CAAC,OAAO,UAAU,iBAAiB,CAAC,IAAI,EAAE,UAAU,CAAC,WAAW,GAAG;IACxE,KAAK,EAAE,MAAM,CAAC;CACd,CAUA"}
