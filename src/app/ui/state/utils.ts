@@ -1,4 +1,4 @@
-import {AtomEffect} from "recoil";
+import {atom, Atom, createStore} from "jotai";
 
 export interface StateStorage {
 	getStateFieldValue(key: string): any;
@@ -7,24 +7,42 @@ export interface StateStorage {
 	removeStateFieldListener(key: string, listener: (value: any) => void): void;
 }
 
-export const bidirectionalSyncEffect = (key: any, storage: StateStorage): AtomEffect<any> => (
-	{setSelf, trigger, onSet}
-) => {
-	if (trigger === 'get') {
-		setSelf(storage.getStateFieldValue(key));
-	}
+// Create a store instance that we can use to trigger updates
+let globalStore: ReturnType<typeof createStore> | null = null;
 
-	onSet((newValue) => {
-		storage.setStateFieldValue(key, newValue);
-	});
+// Create a refresh atom that triggers re-renders when external state changes
+const refreshAtom = atom(0);
 
-	const listener = (newValue: any): void => {
-		setSelf(newValue);
-	}
+export const setGlobalStore = (store: ReturnType<typeof createStore>) => {
+	globalStore = store;
+};
 
+export const createSyncedAtom = <T>(key: string, storage: StateStorage, defaultValue?: T): Atom<T> => {
+	const initialValue = storage.getStateFieldValue(key);
+	
+	const syncedAtom = atom(
+		(get) => {
+			// Subscribe to refresh atom to trigger re-reads
+			get(refreshAtom);
+			const currentStorageValue = storage.getStateFieldValue(key);
+			return currentStorageValue !== undefined ? currentStorageValue : defaultValue;
+		},
+		(get, set, newValue: T) => {
+			storage.setStateFieldValue(key, newValue);
+			// Trigger a refresh for all atoms
+			set(refreshAtom, (prev) => prev + 1);
+		}
+	);
+
+	// Set up listener for external storage changes
+	const listener = (newValue: T) => {
+		if (globalStore) {
+			// Trigger refresh to update all atoms
+			globalStore.set(refreshAtom, (prev) => prev + 1);
+		}
+	};
+	
 	storage.addStateFieldListener(key, listener);
 
-	return () => {
-		storage.removeStateFieldListener(key, listener);
-	};
+	return syncedAtom;
 };

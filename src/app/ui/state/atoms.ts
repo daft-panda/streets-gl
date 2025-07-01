@@ -1,87 +1,53 @@
-import {atom, atomFamily, RecoilState} from "recoil";
-import {bidirectionalSyncEffect, StateStorage} from "~/app/ui/state/utils";
+import {atom, Atom} from "jotai";
+import {createSyncedAtom, StateStorage} from "~/app/ui/state/utils";
 import RenderGraphSnapshot from "~/app/ui/RenderGraphSnapshot";
 import { SettingsObjectEntry } from "streets-gl-lib/dist/lib/src/core/settings/SettingsObject";
 import { SettingsSchema } from "streets-gl-lib/dist/lib/src/core/settings/SettingsSchema";
 import { OverpassEndpoint } from "streets-gl-lib/dist/lib/src/core/systems/TileLoadingSystem";
 
 export interface AtomsCollection {
-	activeFeature: RecoilState<{type: number; id: number}>;
-	fps: RecoilState<number>;
-	frameTime: RecoilState<number>;
-	mapTime: RecoilState<number>;
-	mapTimeMultiplier: RecoilState<number>;
-	mapTimeMode: RecoilState<number>;
-	resourcesLoadingProgress: RecoilState<number>;
-	resourceInProgressPath: RecoilState<string>;
-	renderGraph: RecoilState<RenderGraphSnapshot>;
-	northDirection: RecoilState<number>;
-	settingsObject: (param: string) => RecoilState<SettingsObjectEntry>;
-	settingsSchema: RecoilState<SettingsSchema>;
-	overpassEndpoints: RecoilState<OverpassEndpoint[]>;
-	dataTimestamp: RecoilState<Date>;
+	activeFeature: Atom<{type: number; id: number}>;
+	fps: Atom<number>;
+	frameTime: Atom<number>;
+	mapTime: Atom<number>;
+	mapTimeMultiplier: Atom<number>;
+	mapTimeMode: Atom<number>;
+	resourcesLoadingProgress: Atom<number>;
+	resourceInProgressPath: Atom<string>;
+	renderGraph: Atom<RenderGraphSnapshot>;
+	northDirection: Atom<number>;
+	settingsObject: (param: string) => Atom<SettingsObjectEntry>;
+	settingsSchema: Atom<SettingsSchema>;
+	overpassEndpoints: Atom<OverpassEndpoint[]>;
+	dataTimestamp: Atom<Date>;
 }
+
+// Cache for settings objects to simulate atomFamily
+const settingsObjectCache = new Map<string, Atom<SettingsObjectEntry>>();
 
 export const getAtoms = (
 	commonStorage: StateStorage,
 	settingsStorage: StateStorage
 ): AtomsCollection => {
 	return {
-		activeFeature: atom({
-			key: 'activeFeature',
-			effects: [bidirectionalSyncEffect('activeFeature', commonStorage)]
-		}),
-		fps: atom({
-			key: 'fps',
-			effects: [bidirectionalSyncEffect('fpsSmooth', commonStorage)]
-		}),
-		frameTime: atom({
-			key: 'frameTime',
-			effects: [bidirectionalSyncEffect('frameTimeSmooth', commonStorage)]
-		}),
-		mapTime: atom({
-			key: 'mapTime',
-			effects: [bidirectionalSyncEffect('mapTime', commonStorage)]
-		}),
-		mapTimeMultiplier: atom({
-			key: 'mapTimeMultiplier',
-			effects: [bidirectionalSyncEffect('mapTimeMultiplier', commonStorage)]
-		}),
-		mapTimeMode: atom({
-			key: 'mapTimeMode',
-			effects: [bidirectionalSyncEffect('mapTimeMode', commonStorage)]
-		}),
-		resourcesLoadingProgress: atom({
-			key: 'resourcesLoadingProgress',
-			effects: [bidirectionalSyncEffect('resourcesLoadingProgress', commonStorage)]
-		}),
-		resourceInProgressPath: atom({
-			key: 'resourceInProgressPath',
-			effects: [bidirectionalSyncEffect('resourceInProgressPath', commonStorage)]
-		}),
-		renderGraph: atom({
-			key: 'renderGraph',
-			effects: [bidirectionalSyncEffect('renderGraph', commonStorage)]
-		}),
-		northDirection: atom({
-			key: 'northDirection',
-			effects: [bidirectionalSyncEffect('northDirection', commonStorage)]
-		}),
-		settingsObject: atomFamily({
-			key: 'settingsObject',
-			effects: (key: string) => [bidirectionalSyncEffect(key, settingsStorage)]
-		}),
-		settingsSchema: atom({
-			key: 'settingsSchema',
-			effects: [bidirectionalSyncEffect('settingsSchema', commonStorage)]
-		}),
-		overpassEndpoints: atom({
-			key: 'overpassEndpoints',
-			effects: [bidirectionalSyncEffect('overpassEndpoints', commonStorage)]
-		}),
-		dataTimestamp: atom({
-			key: 'dataTimestamp',
-			effects: [bidirectionalSyncEffect('dataTimestamp', commonStorage)]
-		}),
+		activeFeature: createSyncedAtom('activeFeature', commonStorage, {type: 0, id: 0}),
+		fps: createSyncedAtom('fpsSmooth', commonStorage, 0),
+		frameTime: createSyncedAtom('frameTimeSmooth', commonStorage, 0),
+		mapTime: createSyncedAtom('mapTime', commonStorage, 0),
+		mapTimeMultiplier: createSyncedAtom('mapTimeMultiplier', commonStorage, 1),
+		mapTimeMode: createSyncedAtom('mapTimeMode', commonStorage, 0),
+		resourcesLoadingProgress: createSyncedAtom('resourcesLoadingProgress', commonStorage, 0),
+		resourceInProgressPath: createSyncedAtom('resourceInProgressPath', commonStorage, ''),
+		renderGraph: createSyncedAtom('renderGraph', commonStorage, null),
+		northDirection: createSyncedAtom('northDirection', commonStorage, 0),
+		settingsObject: (key: string) => {
+			if (!settingsObjectCache.has(key)) {
+				settingsObjectCache.set(key, createSyncedAtom(key, settingsStorage, {} as SettingsObjectEntry));
+			}
+			return settingsObjectCache.get(key)!;
+		},
+		settingsSchema: createSyncedAtom('settingsSchema', commonStorage, {} as SettingsSchema),
+		overpassEndpoints: createSyncedAtom('overpassEndpoints', commonStorage, []),
+		dataTimestamp: createSyncedAtom('dataTimestamp', commonStorage, new Date()),
 	};
 }

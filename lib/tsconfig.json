@@ -10,7 +10,7 @@
       "stripInternal": true,
       "sourceMap": true,
       "outDir": "dist",
-      "rootDir": "../",
+      "rootDir": "./src",
       "alwaysStrict": true,
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
@@ -27,5 +27,9 @@
         "~/*": ["*"],
       }
     },
-    "exclude": ["node_modules"]
+    "exclude": [
+      "node_modules",
+      "**/*.test.ts",
+      "**/*.spec.ts"
+    ]
   }

@@ -1,20 +1,20 @@
 import UI from "../ui/UI";
 import {getAtoms} from "~/app/ui/state/atoms";
 import UISystemState from "~/app/ui/UISystemState";
-import Pass, { InternalResourceType } from "streets-gl-lib/dist/lib/src/lib/render-graph/Pass"
+import Pass, { InternalResourceType } from "streets-gl-lib/src/lib/render-graph/Pass"
 import RenderGraphSnapshot from "~/app/ui/RenderGraphSnapshot";
 import UIActions from "~/app/ui/UIActions";
-import System from "streets-gl-lib/dist/lib/src/core/System";
-import MapTimeSystem from "streets-gl-lib/dist/lib/src/core/systems/MapTimeSystem"
-import PickingSystem from "streets-gl-lib/dist/lib/src/core/systems/PickingSystem"
-import TileLoadingSystem, { OverpassEndpoint } from "streets-gl-lib/dist/lib/src/core/systems/TileLoadingSystem"
-import SettingsSystem from "streets-gl-lib/dist/lib/src/core/systems/SettingsSystem"
-import ControlsSystem from "streets-gl-lib/dist/lib/src/core/systems/ControlsSystem"
-import RenderSystem from "streets-gl-lib/dist/lib/src/core/systems/RenderSystem"
+import System from "streets-gl-lib/src/core/System";
+import MapTimeSystem from "streets-gl-lib/src/core/systems/MapTimeSystem"
+import PickingSystem from "streets-gl-lib/src/core/systems/PickingSystem"
+import TileLoadingSystem, { OverpassEndpoint } from "streets-gl-lib/src/core/systems/TileLoadingSystem"
+import SettingsSystem from "streets-gl-lib/src/core/systems/SettingsSystem"
+import ControlsSystem from "streets-gl-lib/src/core/systems/ControlsSystem"
+import RenderSystem from "streets-gl-lib/src/core/systems/RenderSystem"
 import SettingsStorageDecorator from "../ui/SettingsStorageDecorator";
-import MathUtils from "streets-gl-lib/dist/lib/src/lib/math/MathUtils"
-import Utils from "streets-gl-lib/dist/lib/src/core/Utils"
-import Resource from "streets-gl-lib/dist/lib/src/lib/render-graph/Resource";
+import MathUtils from "streets-gl-lib/src/lib/math/MathUtils"
+import Utils from "streets-gl-lib/src/core/Utils"
+import Resource from "streets-gl-lib/src/lib/render-graph/Resource";
 
 const FPSUpdateInterval = 0.4;
 

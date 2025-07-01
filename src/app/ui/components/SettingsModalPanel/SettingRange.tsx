@@ -1,9 +1,9 @@
 import React, {useContext} from "react";
 import styles from "./Setting.scss";
 import {AtomsContext} from "~/app/ui/UI";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useAtom, useAtomValue} from "jotai";
 import Setting from "./Setting";
-import { SettingsSchemaRangeScale } from "streets-gl-lib/dist/lib/src/core/settings/SettingsSchema";
+import { SettingsSchemaRangeScale } from "streets-gl-lib/src/core/settings/SettingsSchema";
 
 const logToLinear = (min: number, max: number, value: number): number => {
 	const norm = (value - min) / (max - min);
@@ -23,8 +23,8 @@ const SettingRange: React.FC<{
 	id: string;
 }> = ({id}) => {
 	const atoms = useContext(AtomsContext);
-	const [settingValue, setSettingValue] = useRecoilState(atoms.settingsObject(id));
-	const schema = useRecoilValue(atoms.settingsSchema)[id];
+	const [settingValue, setSettingValue] = useAtom(atoms.settingsObject(id));
+	const schema = useAtomValue(atoms.settingsSchema)[id];
 
 	return <Setting name={schema.label} isSub={!!schema.parent}>
 		<div className={styles.range}>

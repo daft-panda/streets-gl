@@ -1,9 +1,9 @@
 import Root from "./Root";
 import React from "react";
 import { createRoot } from 'react-dom/client';
-import {RecoilRoot} from "recoil";
+import { Provider, createStore } from "jotai";
 import {AtomsCollection} from "~/app/ui/state/atoms";
-import {StateStorage} from "~/app/ui/state/utils";
+import {StateStorage, setGlobalStore} from "~/app/ui/state/utils";
 import UISystemState from "~/app/ui/UISystemState";
 import UIActions from "~/app/ui/UIActions";
 
@@ -31,14 +31,18 @@ export default class UI implements StateStorage {
 	): void {
 		const element = document.getElementById('ui');
 		const root = createRoot(element);
+		
+		// Create and set up the Jotai store
+		const store = createStore();
+		setGlobalStore(store);
 
 		root.render(
 			<React.StrictMode>
 				<AtomsContext.Provider value={atoms}>
 					<ActionsContext.Provider value={actions}>
-						<RecoilRoot>
+						<Provider store={store}>
 							<Root/>
-						</RecoilRoot>
+						</Provider>
 					</ActionsContext.Provider>
 				</AtomsContext.Provider>
 			</React.StrictMode>

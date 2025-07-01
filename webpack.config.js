@@ -1,13 +1,13 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const {EsbuildPlugin} = require('esbuild-loader');
+const { EsbuildPlugin } = require('esbuild-loader');
 
 const childProcess = require('child_process');
-const {DefinePlugin} = require("webpack");
+const { DefinePlugin } = require("webpack");
 const COMMIT_SHA = childProcess.execSync('git rev-parse HEAD').toString().trim();
 const COMMIT_BRANCH = childProcess.execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
 const VERSION = require('./package.json').version;
@@ -43,15 +43,15 @@ module.exports = (env, argv) => ([{
 		new MiniCssExtractPlugin(),
 		new CopyPlugin({
 			patterns: [
-				{from: './lib/resources/textures', to: path.resolve(__dirname, 'build/textures')},
-				{from: './lib/resources/models', to: path.resolve(__dirname, 'build/models')},
-				{from: './lib/resources/images', to: path.resolve(__dirname, 'build/images')},
-				{from: './lib/resources/misc', to: path.resolve(__dirname, 'build/misc')}
+				{ from: './lib/resources/textures', to: path.resolve(__dirname, 'build/textures') },
+				{ from: './lib/resources/models', to: path.resolve(__dirname, 'build/models') },
+				{ from: './lib/resources/images', to: path.resolve(__dirname, 'build/images') },
+				{ from: './lib/resources/misc', to: path.resolve(__dirname, 'build/misc') }
 			]
 		}),
 		new ESLintPlugin({
 			context: './src',
-			extensions: ['ts', 'tsx']
+			extensions: ['ts', 'tsx'],
 		}),
 		new DefinePlugin({
 			COMMIT_SHA: JSON.stringify(COMMIT_SHA),
@@ -82,7 +82,11 @@ module.exports = (env, argv) => ([{
 						loader: 'css-loader',
 						options: {
 							importLoaders: 1,
-							modules: true,
+							modules: {
+								mode: 'local',
+								namedExport: false,
+								exportLocalsConvention: 'asIs'
+							},
 							url: false
 						},
 					},

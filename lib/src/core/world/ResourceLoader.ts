@@ -1,5 +1,5 @@
 import {load} from '@loaders.gl/core';
-import {GLTFLoader} from '@loaders.gl/gltf';
+import {GLTFLoader, GLTFPostprocessed, postProcessGLTF} from '@loaders.gl/gltf';
 
 export enum ResourceType {
 	Image,
@@ -103,8 +103,9 @@ export default new class ResourceLoader {
 		});
 	}
 
-	private async loadGLTF(url: string): Promise<HTMLImageElement> {
-		return await load(url, GLTFLoader);
+	private async loadGLTF(url: string): Promise<GLTFPostprocessed> {
+		const gltfWithBuffers = await load(url, GLTFLoader);
+		return postProcessGLTF(gltfWithBuffers);
 	}
 
 	private static getResourceTypeFromString(str: string): ResourceType {
