@@ -24,7 +24,6 @@
         "build:prod": "rollup -c --environment BUILD:production",
         "typecheck": "tsc --noEmit -p ./tsconfig.json",
         "declaration": "tsc -p ./tsconfig.json --declaration --emitDeclarationOnly",
-        "prepare": "test -d node_modules || bun install && rollup -c",
         "preinstall": "echo 'This package requires building. Run: bun pm trust streets-gl-lib'"
     },
     "dependencies": {
